@@ -1,0 +1,1188 @@
+// Four Legs Good - Pet Adoption Matcher
+const API_BASE = '/api';
+
+// Placeholder SVGs for each species type
+const CAT_PLACEHOLDER = `<svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" fill="#2E7D9A" opacity="0.3">
+  <ellipse cx="50" cy="55" rx="30" ry="20"/>
+  <circle cx="50" cy="30" r="18"/>
+  <polygon points="35,18 38,5 45,15"/>
+  <polygon points="65,18 62,5 55,15"/>
+  <circle cx="43" cy="28" r="3" fill="#fff"/>
+  <circle cx="57" cy="28" r="3" fill="#fff"/>
+  <ellipse cx="50" cy="35" rx="4" ry="2.5" fill="#E91E63"/>
+</svg>`;
+
+const DOG_PLACEHOLDER = `<svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" fill="#2E7D9A" opacity="0.3">
+  <ellipse cx="50" cy="55" rx="32" ry="22"/>
+  <circle cx="50" cy="28" r="20"/>
+  <ellipse cx="30" cy="18" rx="8" ry="12"/>
+  <ellipse cx="70" cy="18" rx="8" ry="12"/>
+  <circle cx="43" cy="26" r="3" fill="#fff"/>
+  <circle cx="57" cy="26" r="3" fill="#fff"/>
+  <ellipse cx="50" cy="34" rx="5" ry="3" fill="#333"/>
+</svg>`;
+
+const SMALL_PLACEHOLDER = `<svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" fill="#2E7D9A" opacity="0.3">
+  <ellipse cx="50" cy="50" rx="25" ry="20"/>
+  <circle cx="50" cy="30" r="16"/>
+  <ellipse cx="38" cy="12" rx="4" ry="10"/>
+  <ellipse cx="62" cy="12" rx="4" ry="10"/>
+  <circle cx="44" cy="28" r="2" fill="#fff"/>
+  <circle cx="56" cy="28" r="2" fill="#fff"/>
+  <ellipse cx="50" cy="34" rx="3" ry="2" fill="#E91E63"/>
+</svg>`;
+
+// Species that count as "smalls"
+const SMALL_SPECIES = ['rabbit', 'guinea pig', 'hamster', 'gerbil', 'ferret', 'chinchilla', 'rat', 'mouse', 'bird', 'reptile', 'small'];
+
+// State
+let allAnimals = [];
+let filteredAnimals = [];
+let currentSpecies = 'dog'; // Default to dogs
+let currentLang = 'en'; // Language: 'en' or 'es'
+
+// i18n dictionary
+const TRANSLATIONS = {
+  en: {
+    'meta.description': 'Find your perfect pet companion at Four Legs Good Animal Rescue',
+    'page.title': 'Browse Your Perfect Pet',
+    'header.title': 'Browse Your Perfect Pet',
+    'header.cta': 'Know What You Want? Search Here',
+    'filter.hint': 'Check all that apply below:',
+    'filter.age_label': 'Age',
+    'filter.sex_label': 'Sex',
+    'filter.color_label': 'Color',
+    'filter.color_placeholder': 'e.g. tabby, black...',
+    'filter.energy_label': 'Energy',
+    'filter.special_needs_label': 'Special Needs',
+    'filter.good_with_kids_label': 'Good with Kids',
+    'filter.good_with_dogs_label': 'Good with Dogs',
+    'filter.good_with_cats_label': 'Good with Cats',
+    'filter.age_young': 'Young',
+    'filter.age_adult': 'Adult',
+    'filter.age_senior': 'Senior',
+    'filter.sex_male': 'M',
+    'filter.sex_female': 'F',
+    'filter.energy_unknown': 'Unknown',
+    'filter.energy_low': 'Low',
+    'filter.energy_med': 'Med',
+    'filter.energy_high': 'High',
+    'filter.special_needs_yes': 'Yes',
+    'filter.special_needs_no': 'No',
+    'filter.compat_unknown': 'Unknown',
+    'filter.compat_yes': 'Yes',
+    'filter.compat_some': 'Some',
+    'filter.compat_no': 'No',
+    'species.dogs': '\ud83d\udc15 Dogs',
+    'species.cats': '\ud83d\udc31 Cats',
+    'species.smalls': '\ud83d\udc30 Smalls',
+    'results.showing': 'Showing',
+    'results.adoptable': 'adoptable',
+    'results.species_dogs': 'dogs',
+    'results.species_cats': 'cats',
+    'results.species_small': 'small animals',
+    'results.species_pets': 'pets',
+    'results.ready_to_adopt': 'Ready to adopt?',
+    'results.apply_to_adopt': 'Apply to Adopt',
+    'results.english_pdf': 'English PDF',
+    'results.espanol_pdf': 'Español PDF',
+    'card.sex_label': 'Sex:',
+    'card.age_label': 'Age:',
+    'card.color_label': 'Color:',
+    'card.good_with_label': 'Good with:',
+    'card.energy_label': 'Energy:',
+    'card.special_needs_label': 'Special needs:',
+    'card.sex_male': 'Male',
+    'card.sex_female': 'Female',
+    'card.sex_unknown': 'Unknown',
+    'card.energy_low': 'Low',
+    'card.energy_med': 'Med',
+    'card.energy_high': 'High',
+    'card.energy_unknown': 'Unknown',
+    'card.compat_yes': 'Yes',
+    'card.compat_some': 'Some',
+    'card.compat_no': 'No',
+    'card.compat_unknown': '?',
+    'card.special_needs_yes': 'Yes',
+    'card.special_needs_no': 'No',
+    'card.color_unknown': 'Unknown',
+    'card.adoption_pending': 'Adoption Pending',
+    'card.bonded_pair': 'Bonded Pair',
+    'card.compat_kids': 'Kids',
+    'card.compat_dogs': 'Dogs',
+    'card.compat_cats': 'Cats',
+    'card.age_yr': 'yr',
+    'card.age_yrs': 'yrs',
+    'card.age_mo': 'mo',
+    'card.age_mos': 'mos',
+    'modal.sex_label': 'Sex',
+    'modal.age_label': 'Age',
+    'modal.color_label': 'Color',
+    'modal.match_score_label': 'Match Score',
+    'modal.about_heading': '\ud83d\udcdd About',
+    'modal.adopt_cta': '\ud83d\udc3e Please adopt me at',
+    'modal.default_description': 'Contact the shelter to learn more about this wonderful cat!',
+    'btn.clear_filters': 'Clear Filters',
+    'btn.retry': 'Retry',
+    'loading.text': 'Loading adoptable pets...',
+    'empty.no_dogs': '\ud83d\udc15 No dogs match your filters',
+    'empty.no_cats': '\ud83d\ude3f No cats match your filters',
+    'empty.no_smalls': '\ud83d\udc30 No small animals match your filters',
+    'empty.no_pets': '\ud83d\udc3e No pets match your filters',
+    'error.load_failed': 'Failed to load animals',
+    'error.connection': 'Could not connect to server',
+    'footer.tagline': 'Helping pets find loving homes',
+    'lightbox.prev_aria': 'Previous',
+    'lightbox.next_aria': 'Next',
+    'results.template': 'Showing <span>{count}</span> adoptable <span>{species}</span>',
+  },
+  es: {
+    'meta.description': 'Encuentra tu compañero perfecto en Four Legs Good Animal Rescue',
+    'page.title': 'Encuentra Tu Mascota Perfecta',
+    'header.title': 'Encuentra Tu Mascota Perfecta',
+    'header.cta': '¿Sabes Lo Que Quieres? Busca Aquí',
+    'filter.hint': 'Marca todo lo que aplique:',
+    'filter.age_label': 'Edad',
+    'filter.sex_label': 'Sexo',
+    'filter.color_label': 'Color',
+    'filter.color_placeholder': 'ej. atigrado, negro...',
+    'filter.energy_label': 'Energía',
+    'filter.special_needs_label': 'Necesidades Especiales',
+    'filter.good_with_kids_label': 'Bueno con Niños',
+    'filter.good_with_dogs_label': 'Bueno con Perros',
+    'filter.good_with_cats_label': 'Bueno con Gatos',
+    'filter.age_young': 'Joven',
+    'filter.age_adult': 'Adulto',
+    'filter.age_senior': 'Mayor',
+    'filter.sex_male': 'M',
+    'filter.sex_female': 'H',
+    'filter.energy_unknown': 'Desconocido',
+    'filter.energy_low': 'Bajo',
+    'filter.energy_med': 'Medio',
+    'filter.energy_high': 'Alto',
+    'filter.special_needs_yes': 'Sí',
+    'filter.special_needs_no': 'No',
+    'filter.compat_unknown': 'Desconocido',
+    'filter.compat_yes': 'Sí',
+    'filter.compat_some': 'Algo',
+    'filter.compat_no': 'No',
+    'species.dogs': '\ud83d\udc15 Perros',
+    'species.cats': '\ud83d\udc31 Gatos',
+    'species.smalls': '\ud83d\udc30 Animales Pequeños',
+    'results.showing': 'Mostrando',
+    'results.adoptable': 'adoptables',
+    'results.species_dogs': 'perros',
+    'results.species_cats': 'gatos',
+    'results.species_small': 'animales pequeños',
+    'results.species_pets': 'mascotas',
+    'results.ready_to_adopt': '¿Listo para adoptar?',
+    'results.apply_to_adopt': 'Solicitar Adopción',
+    'results.english_pdf': 'PDF en Inglés',
+    'results.espanol_pdf': 'PDF en Español',
+    'card.sex_label': 'Sexo:',
+    'card.age_label': 'Edad:',
+    'card.color_label': 'Color:',
+    'card.good_with_label': 'Bueno con:',
+    'card.energy_label': 'Energía:',
+    'card.special_needs_label': 'Necesidades especiales:',
+    'card.sex_male': 'Macho',
+    'card.sex_female': 'Hembra',
+    'card.sex_unknown': 'Desconocido',
+    'card.energy_low': 'Bajo',
+    'card.energy_med': 'Medio',
+    'card.energy_high': 'Alto',
+    'card.energy_unknown': 'Desconocido',
+    'card.compat_yes': 'Sí',
+    'card.compat_some': 'Algo',
+    'card.compat_no': 'No',
+    'card.compat_unknown': '?',
+    'card.special_needs_yes': 'Sí',
+    'card.special_needs_no': 'No',
+    'card.color_unknown': 'Desconocido',
+    'card.adoption_pending': 'Adopción Pendiente',
+    'card.bonded_pair': 'Pareja Vinculada',
+    'card.compat_kids': 'Niños',
+    'card.compat_dogs': 'Perros',
+    'card.compat_cats': 'Gatos',
+    'card.age_yr': 'año',
+    'card.age_yrs': 'años',
+    'card.age_mo': 'mes',
+    'card.age_mos': 'meses',
+    'modal.sex_label': 'Sexo',
+    'modal.age_label': 'Edad',
+    'modal.color_label': 'Color',
+    'modal.match_score_label': 'Compatibilidad',
+    'modal.about_heading': '\ud83d\udcdd Acerca de',
+    'modal.adopt_cta': '\ud83d\udc3e Por favor adóptame llamando al',
+    'modal.default_description': '¡Contacta al refugio para conocer más sobre este gato maravilloso!',
+    'btn.clear_filters': 'Limpiar Filtros',
+    'btn.retry': 'Reintentar',
+    'loading.text': 'Cargando mascotas adoptables...',
+    'empty.no_dogs': '\ud83d\udc15 Ningún perro coincide con tus filtros',
+    'empty.no_cats': '\ud83d\ude3f Ningún gato coincide con tus filtros',
+    'empty.no_smalls': '\ud83d\udc30 Ningún animal pequeño coincide con tus filtros',
+    'empty.no_pets': '\ud83d\udc3e Ninguna mascota coincide con tus filtros',
+    'error.load_failed': 'Error al cargar los animales',
+    'error.connection': 'No se pudo conectar al servidor',
+    'footer.tagline': 'Ayudando a mascotas a encontrar hogares amorosos',
+    'lightbox.prev_aria': 'Anterior',
+    'lightbox.next_aria': 'Siguiente',
+    'results.template': 'Mostrando <span>{count}</span> <span>{species}</span> adoptables',
+  },
+};
+
+function i18n(key) {
+  return TRANSLATIONS[currentLang]?.[key] ?? TRANSLATIONS.en[key] ?? key;
+}
+
+// DOM Elements
+const elements = {
+  animalsGrid: document.getElementById('animalsGrid'),
+  loadingState: document.getElementById('loadingState'),
+  emptyState: document.getElementById('emptyState'),
+  emptyMessage: document.getElementById('emptyMessage'),
+
+  speciesFilter: document.getElementById('speciesFilter'),
+  searchInput: document.getElementById('searchInput'),
+  modal: document.getElementById('animalModal'),
+
+};
+
+// Initialize
+document.addEventListener('DOMContentLoaded', init);
+
+// Apply i18n text to static HTML elements
+function applyStaticTranslations() {
+  // Hero header
+  const h1 = document.querySelector('.hero-title h1');
+  if (h1) h1.textContent = i18n('header.title');
+  const heroCta = document.querySelector('.hero-cta');
+  if (heroCta) heroCta.textContent = i18n('header.cta');
+
+  // Filter hint
+  const hint = document.querySelector('.filter-hint');
+  if (hint) hint.textContent = i18n('filter.hint');
+
+  // Filter group labels (direct <label> children of .filter-group)
+  const filterLabelMap = [
+    ['ageFilter', 'filter.age_label'],
+    ['sexFilter', 'filter.sex_label'],
+    ['searchInput', 'filter.color_label'],
+    ['energyLevel', 'filter.energy_label'],
+    ['specialNeeds', 'filter.special_needs_label'],
+    ['goodWithKids', 'filter.good_with_kids_label'],
+    ['goodWithDogs', 'filter.good_with_dogs_label'],
+    ['goodWithCats', 'filter.good_with_cats_label'],
+  ];
+  filterLabelMap.forEach(([filterName, key]) => {
+    // Find the filter-group containing this filter's inputs
+    const input = filterName === 'searchInput'
+      ? document.getElementById('searchInput')
+      : document.querySelector(`input[name="${filterName}"]`);
+    if (!input) return;
+    const group = input.closest('.filter-group');
+    if (!group) return;
+    const label = group.querySelector(':scope > label');
+    if (label) label.textContent = i18n(key);
+  });
+
+  // Color placeholder
+  const colorInput = document.getElementById('searchInput');
+  if (colorInput) colorInput.placeholder = i18n('filter.color_placeholder');
+
+  // Checkbox labels — map input name+value to i18n key
+  const cbMap = {
+    'ageFilter:young': 'filter.age_young',
+    'ageFilter:adult': 'filter.age_adult',
+    'ageFilter:senior': 'filter.age_senior',
+    'sexFilter:male': 'filter.sex_male',
+    'sexFilter:female': 'filter.sex_female',
+    'energyLevel:unknown': 'filter.energy_unknown',
+    'energyLevel:low': 'filter.energy_low',
+    'energyLevel:medium': 'filter.energy_med',
+    'energyLevel:high': 'filter.energy_high',
+    'specialNeeds:yes': 'filter.special_needs_yes',
+    'specialNeeds:no': 'filter.special_needs_no',
+    'goodWithKids:unknown': 'filter.compat_unknown',
+    'goodWithKids:yes': 'filter.compat_yes',
+    'goodWithKids:somewhat': 'filter.compat_some',
+    'goodWithKids:no': 'filter.compat_no',
+    'goodWithDogs:unknown': 'filter.compat_unknown',
+    'goodWithDogs:yes': 'filter.compat_yes',
+    'goodWithDogs:somewhat': 'filter.compat_some',
+    'goodWithDogs:no': 'filter.compat_no',
+    'goodWithCats:unknown': 'filter.compat_unknown',
+    'goodWithCats:yes': 'filter.compat_yes',
+    'goodWithCats:somewhat': 'filter.compat_some',
+    'goodWithCats:no': 'filter.compat_no',
+  };
+  Object.entries(cbMap).forEach(([nameVal, key]) => {
+    const [name, value] = nameVal.split(':');
+    const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
+    if (!input) return;
+    const label = input.closest('label');
+    if (!label) return;
+    // Replace text node after the input
+    const textNode = Array.from(label.childNodes).find(n => n.nodeType === 3 && n.textContent.trim());
+    if (textNode) textNode.textContent = ' ' + i18n(key);
+  });
+
+  // Species tabs
+  const speciesTabMap = { dog: 'species.dogs', cat: 'species.cats', small: 'species.smalls' };
+  document.querySelectorAll('.species-tab').forEach(tab => {
+    const species = tab.dataset.species;
+    if (species && speciesTabMap[species]) {
+      tab.textContent = i18n(speciesTabMap[species]);
+    }
+  });
+
+  // Adoption links row
+  const adoptLabel = document.querySelector('.adoption-links-label');
+  if (adoptLabel) adoptLabel.textContent = i18n('results.ready_to_adopt');
+  const adoptLinks = document.querySelectorAll('.adoption-link');
+  adoptLinks.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    if (href.includes('adoption-application')) link.textContent = i18n('results.apply_to_adopt');
+    else if (href.includes('blank-english')) link.textContent = i18n('results.english_pdf');
+    else if (href.includes('blank-spanish')) link.textContent = i18n('results.espanol_pdf');
+  });
+
+  // Loading text
+  const loadingP = document.querySelector('#loadingState p');
+  if (loadingP) loadingP.textContent = i18n('loading.text');
+
+  // Empty state button
+  const clearBtn = document.querySelector('#emptyState button');
+  if (clearBtn) clearBtn.textContent = i18n('btn.clear_filters');
+
+  // Modal labels
+  const modalLabelMap = [
+    ['modalGender', 'modal.sex_label'],
+    ['modalAge', 'modal.age_label'],
+    ['modalColor', 'modal.color_label'],
+    ['modalScore', 'modal.match_score_label'],
+  ];
+  modalLabelMap.forEach(([valueId, key]) => {
+    const valueEl = document.getElementById(valueId);
+    if (!valueEl) return;
+    const detailItem = valueEl.closest('.detail-item');
+    if (!detailItem) return;
+    const labelEl = detailItem.querySelector('.detail-label');
+    if (labelEl) labelEl.textContent = i18n(key);
+  });
+
+  // Modal about heading
+  const aboutH4 = document.querySelector('.modal-section h4');
+  if (aboutH4) aboutH4.textContent = i18n('modal.about_heading');
+
+  // Modal adopt CTA
+  const ctaP = document.querySelector('.adopt-cta');
+  if (ctaP) ctaP.innerHTML = `${i18n('modal.adopt_cta')} <strong>(845) 414-9700</strong>`;
+
+  // Footer tagline
+  const footerNote = document.querySelector('.footer-note');
+  if (footerNote) footerNote.textContent = i18n('footer.tagline');
+}
+
+function updateHtmlLangAttribute() {
+  document.documentElement.lang = currentLang;
+}
+
+function updatePageTitle() {
+  document.title = i18n('page.title');
+}
+
+function updateToggleActiveState() {
+  const btnEn = document.getElementById('langBtnEn');
+  const btnEs = document.getElementById('langBtnEs');
+  if (btnEn) btnEn.classList.toggle('active', currentLang === 'en');
+  if (btnEs) btnEs.classList.toggle('active', currentLang === 'es');
+}
+
+function updateResultsCount(count) {
+  const speciesKeys = { dog: 'results.species_dogs', cat: 'results.species_cats', small: 'results.species_small' };
+  const species = i18n(speciesKeys[currentSpecies] || 'results.species_pets');
+  const template = i18n('results.template');
+  const el = document.querySelector('.results-count');
+  if (el) el.innerHTML = template.replace('{count}', count).replace('{species}', species);
+}
+
+function updateSearcherCtaHref() {
+  const cta = document.querySelector('a.hero-cta');
+  if (!cta) return;
+  const url = new URL(cta.href);
+  if (currentLang === 'es') {
+    url.searchParams.set('lang', 'es');
+  } else {
+    url.searchParams.delete('lang');
+  }
+  cta.href = url.toString();
+}
+
+async function init() {
+  // Language detection from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const langParam = urlParams.get('lang');
+  currentLang = (langParam === 'es') ? 'es' : 'en';
+
+  // Apply static text translations + toggle state
+  applyStaticTranslations();
+  updateToggleActiveState();
+  updateSearcherCtaHref();
+  updateHtmlLangAttribute();
+  updatePageTitle();
+
+  // Language toggle click handler
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const newLang = btn.dataset.lang;
+      if (newLang === currentLang) return;
+
+      currentLang = newLang;
+
+      // Update URL without page reload
+      const url = new URL(window.location.href);
+      if (newLang === 'es') {
+        url.searchParams.set('lang', 'es');
+      } else {
+        url.searchParams.delete('lang');
+      }
+      history.replaceState({}, '', url);
+
+      // Re-render everything
+      applyStaticTranslations();
+      updateToggleActiveState();
+      updateSearcherCtaHref();
+      updateHtmlLangAttribute();
+      updatePageTitle();
+      applyFilters(); // re-renders card grid + empty state with new language
+    });
+  });
+
+  // Event listeners for filters
+  elements.searchInput.addEventListener('input', debounce(applyFilters, 300));
+  
+  // All filters are now checkboxes (multi-select)
+  const checkboxFilters = [
+    'ageFilter', 'sexFilter', 'energyLevel', 
+    'goodWithCats', 'goodWithDogs', 'goodWithKids', 'specialNeeds'
+  ];
+  
+  checkboxFilters.forEach(filterName => {
+    document.querySelectorAll(`input[name="${filterName}"]`).forEach(cb => {
+      cb.addEventListener('change', () => applyFilters());
+    });
+  });
+  
+  // Close modal on background click
+  elements.modal.addEventListener('click', (e) => {
+    if (e.target === elements.modal) closeModal();
+  });
+  
+  // Keyboard: Escape closes, arrows navigate gallery
+  document.addEventListener('keydown', (e) => {
+    // Lightbox takes priority over modal
+    const lightbox = document.querySelector('.photo-lightbox');
+    if (lightbox) {
+      if (e.key === 'Escape') { lightbox.remove(); return; }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); lightboxNav(-1); return; }
+      if (e.key === 'ArrowRight') { e.preventDefault(); lightboxNav(1); return; }
+      return;
+    }
+    if (!elements.modal.classList.contains('active')) return;
+    if (e.key === 'Escape') closeModal();
+  });
+  
+  // Load animals
+  await loadAnimals();
+}
+
+// Switch species tab
+function switchSpecies(species) {
+  currentSpecies = species;
+  elements.speciesFilter.value = species;
+  
+  // Update tab UI
+  document.querySelectorAll('.species-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.species === species);
+  });
+  
+  // Clear filters and reapply (updateResultsCount handles species label via template)
+  clearFilters();
+}
+
+
+// Get placeholder SVG based on species
+function getPlaceholder(species) {
+  const s = (species || '').toLowerCase();
+  if (s === 'cat') return 'data:image/svg+xml,' + encodeURIComponent(CAT_PLACEHOLDER);
+  if (s === 'dog') return 'data:image/svg+xml,' + encodeURIComponent(DOG_PLACEHOLDER);
+  return 'data:image/svg+xml,' + encodeURIComponent(SMALL_PLACEHOLDER);
+}
+
+async function loadAnimals() {
+  try {
+    const response = await fetch(`${API_BASE}/animals`);
+    const result = await response.json();
+    
+    if (result.success && result.data) {
+      // Store all animals - filtering happens in applyFilters
+      allAnimals = result.data;
+      applyFilters();
+    } else {
+      showError(i18n('error.load_failed'));
+    }
+  } catch (error) {
+    console.error('Load error:', error);
+    showError(i18n('error.connection'));
+  } finally {
+    elements.loadingState.style.display = 'none';
+  }
+}
+
+// Check if an animal matches the current species tab
+function matchesSpecies(animal) {
+  const species = (animal.species || '').toLowerCase();
+  
+  if (currentSpecies === 'dog') {
+    return species === 'dog';
+  } else if (currentSpecies === 'cat') {
+    return species === 'cat';
+  } else if (currentSpecies === 'small') {
+    // Match any small animal species
+    return SMALL_SPECIES.some(s => species.includes(s));
+  }
+  return false;
+}
+
+// Truncate age: "8 years 9 months" → "8 yrs", "6 months" → "6 mos"
+function truncateAgeToYears(ageText) {
+  if (!ageText) return '';
+  const yearsMatch = ageText.match(/^(\d+)\s*years?/i);
+  if (yearsMatch) {
+    const years = parseInt(yearsMatch[1], 10);
+    return `${years} ${years === 1 ? i18n('card.age_yr') : i18n('card.age_yrs')}`;
+  }
+  const monthsMatch = ageText.match(/^(\d+)\s*months?/i);
+  if (monthsMatch) {
+    const months = parseInt(monthsMatch[1], 10);
+    return `${months} ${months === 1 ? i18n('card.age_mo') : i18n('card.age_mos')}`;
+  }
+  return ageText;
+}
+
+// Gender: Male → M, Female → F
+function abbreviateGender(sex) {
+  const s = (sex || '').trim().toLowerCase();
+  if (s === 'male') return i18n('card.sex_male');
+  if (s === 'female') return i18n('card.sex_female');
+  return i18n('card.sex_unknown');
+}
+
+// Energy: Low / Med / High / Unk
+function abbreviateEnergy(matchValue) {
+  const e = (matchValue || 'unknown').toLowerCase();
+  if (e === 'low') return i18n('card.energy_low');
+  if (e === 'medium') return i18n('card.energy_med');
+  if (e === 'high') return i18n('card.energy_high');
+  return i18n('card.energy_unknown');
+}
+
+// Compact symbol for compatibility _match enum values
+function getCompatSymbol(matchValue) {
+  switch ((matchValue || 'unknown').toLowerCase()) {
+    case 'yes': return i18n('card.compat_yes');
+    case 'somewhat': return i18n('card.compat_some');
+    case 'no': return i18n('card.compat_no');
+    case 'unknown':
+    default: return i18n('card.compat_unknown');
+  }
+}
+
+// "Kids ✓, Dogs ✓, Cats ?" for front card
+function formatCompatValue(animal) {
+  const bn = animal.behaviorNotes;
+  const kids = getCompatSymbol(bn?.goodWithKids_match);
+  const dogs = getCompatSymbol(bn?.goodWithDogs_match);
+  const cats = getCompatSymbol(bn?.goodWithCats_match);
+  return `${i18n('card.compat_kids')} ${kids}, ${i18n('card.compat_dogs')} ${dogs}, ${i18n('card.compat_cats')} ${cats}`;
+}
+
+// Energy label for front card
+function formatEnergyValue(animal) {
+  const energy = (animal.behaviorNotes?.energyLevel_match || 'unknown').toLowerCase();
+  if (energy === 'unknown') return i18n('card.energy_unknown');
+  if (energy === 'low') return i18n('card.energy_low');
+  if (energy === 'medium') return i18n('card.energy_med');
+  if (energy === 'high') return i18n('card.energy_high');
+  return energy.charAt(0).toUpperCase() + energy.slice(1);
+}
+
+// Special needs Yes/No for front card
+function formatSpecialNeedsValue(animal) {
+  const sn = (animal.behaviorNotes?.specialNeeds || '').trim().toLowerCase();
+  const hasNeeds = sn && sn !== 'none' && sn !== 'n/a' && sn !== 'no' && !sn.includes('no special') && sn !== 'not specified' && sn !== '-';
+  return hasNeeds ? i18n('card.special_needs_yes') : i18n('card.special_needs_no');
+}
+
+
+
+function getSelectedCheckboxValues(name) {
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked:not(:disabled)`))
+    .map(cb => cb.value.toLowerCase());
+}
+
+// Check if any filter checkbox is checked or color input has text
+function hasActiveFilters() {
+  const allFilterNames = ['ageFilter', 'sexFilter', 'energyLevel', 'goodWithCats', 'goodWithDogs', 'goodWithKids', 'specialNeeds'];
+  for (const filterName of allFilterNames) {
+    if (getSelectedCheckboxValues(filterName).length > 0) return true;
+  }
+  if (elements.searchInput && elements.searchInput.value.trim()) return true;
+  return false;
+}
+
+function calculateMatchScore(animal) {
+  let score = 50; // Base score
+  
+  // Age filter match — no defaults, any selection is user-narrowing
+  const selectedAges = getSelectedCheckboxValues('ageFilter');
+  if (selectedAges.length > 0) {
+    const years = animal.ageInYears;
+    let ageMatch = false;
+    if (selectedAges.includes('young') && years < 2) ageMatch = true;
+    if (selectedAges.includes('adult') && years >= 2 && years < 7) ageMatch = true;
+    if (selectedAges.includes('senior') && years >= 7) ageMatch = true;
+    if (ageMatch) score += 20;
+  }
+  
+  // Gender filter match — no defaults, any selection is user-narrowing
+  const selectedSex = getSelectedCheckboxValues('sexFilter');
+  if (selectedSex.length > 0 && selectedSex.some(s => animal.sex.toLowerCase().startsWith(s))) {
+    score += 10;
+  }
+  
+  // Compatibility/energy filters — only score when user has narrowed beyond defaults
+  const compatFilters = [
+    { name: 'energyLevel', field: 'energyLevel_match', points: 15 },
+    { name: 'goodWithCats', field: 'goodWithCats_match', points: 10 },
+    { name: 'goodWithDogs', field: 'goodWithDogs_match', points: 10 },
+    { name: 'goodWithKids', field: 'goodWithKids_match', points: 10 },
+  ];
+  
+  for (const { name, field, points } of compatFilters) {
+    const selected = getSelectedCheckboxValues(name);
+    if (selected.length === 0) continue; // No boxes checked — no score impact
+    
+    const animalValue = animal.behaviorNotes?.[field];
+    const isUnknown = !animalValue || animalValue === 'unknown';
+    if (isUnknown) {
+      if (selected.includes('unknown')) score += Math.round(points * 0.5); // Partial credit
+    } else {
+      if (selected.includes(animalValue)) score += points;
+    }
+  }
+  
+  // Color search match (check both ShelterManager color and behavior notes color)
+  const search = elements.searchInput.value.toLowerCase().trim();
+  if (search) {
+    const smColor = (animal.color || '').toLowerCase();
+    const bnColor = (animal.behaviorNotes?.color || '').toLowerCase();
+    if (smColor.includes(search) || bnColor.includes(search)) {
+      score += 15;
+    }
+  }
+  
+  // Bonus for having a description
+  if (animal.description && animal.description.length > 50) {
+    score += 5;
+  }
+  
+  // Bonus for having behavior notes
+  if (animal.behaviorNotes) {
+    score += 5;
+  }
+  
+  return Math.min(100, score);
+}
+
+function applyFilters() {
+  const search = elements.searchInput.value.toLowerCase().trim();
+  
+  // Get all checkbox filter values
+  const selectedAges = getSelectedCheckboxValues('ageFilter');
+  const selectedSex = getSelectedCheckboxValues('sexFilter');
+  const selectedEnergies = getSelectedCheckboxValues('energyLevel');
+  const selectedGoodWithCats = getSelectedCheckboxValues('goodWithCats');
+  const selectedGoodWithDogs = getSelectedCheckboxValues('goodWithDogs');
+  const selectedGoodWithKids = getSelectedCheckboxValues('goodWithKids');
+  const selectedSpecialNeeds = getSelectedCheckboxValues('specialNeeds');
+  
+  filteredAnimals = allAnimals.filter(animal => {
+    // Species filter based on current tab
+    if (!matchesSpecies(animal)) {
+      return false;
+    }
+    
+    // Age filter (multi-select checkboxes)
+    if (selectedAges.length > 0) {
+      const years = animal.ageInYears;
+      let ageMatch = false;
+      if (selectedAges.includes('young') && years < 2) ageMatch = true;
+      if (selectedAges.includes('adult') && years >= 2 && years < 7) ageMatch = true;
+      if (selectedAges.includes('senior') && years >= 7) ageMatch = true;
+      if (!ageMatch) return false;
+    }
+    
+    // Sex filter (multi-select checkboxes)
+    if (selectedSex.length > 0) {
+      const animalSex = animal.sex.toLowerCase().trim();
+      const sexMatch = selectedSex.some(s => animalSex.startsWith(s));
+      if (!sexMatch) return false;
+    }
+    
+    // Energy level filter - use _match field only, no text fallback
+    // "unknown" option includes animals with unknown/empty/missing _match
+    if (selectedEnergies.length > 0) {
+      const energyMatch = animal.behaviorNotes?.energyLevel_match;
+      const isUnknown = !energyMatch || energyMatch === 'unknown';
+      if (isUnknown) {
+        if (!selectedEnergies.includes('unknown')) return false;
+      } else {
+        if (!selectedEnergies.includes(energyMatch)) return false;
+      }
+    }
+    
+    // Good with cats filter - use _match field only, no text fallback
+    // "unknown" option includes animals with unknown/empty/missing _match
+    if (selectedGoodWithCats.length > 0) {
+      const catsMatch = animal.behaviorNotes?.goodWithCats_match;
+      const isUnknown = !catsMatch || catsMatch === 'unknown';
+      if (isUnknown) {
+        if (!selectedGoodWithCats.includes('unknown')) return false;
+      } else {
+        if (!selectedGoodWithCats.includes(catsMatch)) return false;
+      }
+    }
+    
+    // Good with dogs filter - use _match field only, no text fallback
+    // "unknown" option includes animals with unknown/empty/missing _match
+    if (selectedGoodWithDogs.length > 0) {
+      const dogsMatch = animal.behaviorNotes?.goodWithDogs_match;
+      const isUnknown = !dogsMatch || dogsMatch === 'unknown';
+      if (isUnknown) {
+        if (!selectedGoodWithDogs.includes('unknown')) return false;
+      } else {
+        if (!selectedGoodWithDogs.includes(dogsMatch)) return false;
+      }
+    }
+    
+    // Good with kids filter - use _match field only, no text fallback
+    // "unknown" option includes animals with unknown/empty/missing _match
+    if (selectedGoodWithKids.length > 0) {
+      const kidsMatch = animal.behaviorNotes?.goodWithKids_match;
+      const isUnknown = !kidsMatch || kidsMatch === 'unknown';
+      if (isUnknown) {
+        if (!selectedGoodWithKids.includes('unknown')) return false;
+      } else {
+        if (!selectedGoodWithKids.includes(kidsMatch)) return false;
+      }
+    }
+    
+    // Special needs filter — OR within group
+    if (selectedSpecialNeeds.length > 0) {
+      const needsInfo = (animal.behaviorNotes?.specialNeeds || '').toLowerCase();
+      const hasSpecialNeeds = needsInfo && needsInfo !== 'none' && needsInfo !== '-' && 
+                              !needsInfo.includes('no special') && needsInfo !== 'not specified';
+      const animalValue = hasSpecialNeeds ? 'yes' : 'no';
+      if (!selectedSpecialNeeds.includes(animalValue)) return false;
+    }
+    
+    // Search filter (color search - check both ShelterManager and behavior notes)
+    if (search) {
+      const smColor = (animal.color || '').toLowerCase();
+      const bnColor = (animal.behaviorNotes?.color || '').toLowerCase();
+      if (!smColor.includes(search) && !bnColor.includes(search)) {
+        return false;
+      }
+    }
+    
+    return true;
+  });
+  
+  // Calculate scores
+  filteredAnimals = filteredAnimals.map(animal => ({
+    ...animal,
+    matchScore: calculateMatchScore(animal)
+  }));
+  
+  // Sort: active filters → score desc; default → alphabetical by name
+  const filtersActive = hasActiveFilters();
+  if (filtersActive) {
+    filteredAnimals.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
+  } else {
+    filteredAnimals.sort((a, b) => {
+      const nameA = (a.name || '').toLowerCase();
+      const nameB = (b.name || '').toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }
+  
+  renderAnimals();
+}
+
+function renderAnimals() {
+  updateResultsCount(filteredAnimals.length);
+  
+  if (filteredAnimals.length === 0) {
+    elements.animalsGrid.innerHTML = '';
+    // Update empty message based on species
+    const emptyKeys = { dog: 'empty.no_dogs', cat: 'empty.no_cats', small: 'empty.no_smalls' };
+    elements.emptyMessage.textContent = i18n(emptyKeys[currentSpecies] || 'empty.no_pets');
+    elements.emptyState.style.display = 'block';
+    return;
+  }
+  
+  elements.emptyState.style.display = 'none';
+  
+  // Check if any filters are active (user diverged from defaults)
+  
+  /* ADOPTION PENDING — display constants shared across surfaces.
+     Surfaces: dashboard/index.html strip button (Phase A3),
+               matcher-web/app.js card warning (this file, Phase B),
+               custom-search/app.js card warning (Phase C).
+
+     Colors:
+       Adoptable (muted forest green): #5C9974   hover: #4D8662
+       Adoption Pending (muted brick red): #C75450   hover: #A8453F
+       Not Adoptable (grey): existing disabled button CSS
+     Label EN: Adoption Pending
+     Label ES: Adopción Pendiente
+     Behavior: read-only display on matcher cards (no toggle)
+  */
+
+  /* BONDED PAIR — matcher-web stacked badges (Phase D4).
+     Color: #C75450 (same as Adoption Pending on this surface)
+     Font-size: 16px (iterated from 11px → 13px → 16px after visual review)
+     Font-weight: 700 (bolder than dashboard's 600 — visual prominence at card scale)
+     Position: stacked ABOVE Adoption Pending badge, right-justified in name row
+     Order: Bonded Pair on top, Adoption Pending below
+     Both badges share class .status-badge (unified styling in styles.css)
+     Labels: 'Bonded Pair' / 'Pareja Vinculada'
+     Behavior: read-only display on matcher cards (no toggle)
+     Layout:
+       - .card-status-badges has 4px vertical padding, 1px gap between badges
+       - One-badge cards: badge column (27.2px) fits inside h3 default line-height (30.72px),
+         no h3 growth, no compensation needed
+       - Two-badge cards: badge column (47.4px) exceeds h3 line-height by 16.7px
+         Compensation (class .animal-card-name--double-badge + .animal-card-info--double-badge):
+           h3 margin-bottom: 10px → 0px (-10px)
+           .animal-card-info padding-top: 14px → 8px (-6px)
+           .animal-card-info padding-bottom: 16px → 15.3px (-0.7px)
+           Total absorbed: 16.7px → card visible height unchanged
+       - Conditional classes fire ONLY when both bondedPair AND adoptionPending are true
+       - Grid drives equal card heights via align-items stretch; compensation prevents
+         phantom height differences in internal card alignment
+  */
+  elements.animalsGrid.innerHTML = filteredAnimals.map(animal => {
+    const placeholder = getPlaceholder(animal.species);
+    const photoSrc = animal.photoUrl || placeholder;
+    const bn = animal.behaviorNotes;
+    const kids = getCompatSymbol(bn?.goodWithKids_match);
+    const dogs = getCompatSymbol(bn?.goodWithDogs_match);
+    const cats = getCompatSymbol(bn?.goodWithCats_match);
+    const specialNeedsYesNo = formatSpecialNeedsValue(animal);
+    
+    return `
+      <article class="animal-card" onclick="showAnimalDetail('${animal.id}')">
+        <div class="animal-card-photo">
+          <img src="${photoSrc}" alt="${animal.name}" onerror="this.src='${placeholder}'">
+        </div>
+        <div class="animal-card-info${(animal.bondedPair && animal.adoptionPending) ? ' animal-card-info--double-badge' : ''}">
+          <h3 class="animal-card-name${(animal.bondedPair && animal.adoptionPending) ? ' animal-card-name--double-badge' : ''}">
+            <span class="animal-card-name-text">${animal.name}</span>
+            ${(animal.bondedPair || animal.adoptionPending) ? `
+              <div class="card-status-badges">
+                ${animal.bondedPair ? `<span class="status-badge">${i18n('card.bonded_pair')}</span>` : ''}
+                ${animal.adoptionPending ? `<span class="status-badge">${i18n('card.adoption_pending')}</span>` : ''}
+              </div>
+            ` : ''}
+          </h3>
+          <div class="card-details">
+            <div class="detail-row detail-row--split">
+              <span class="detail-item"><span class="label">${i18n('card.sex_label')}</span> ${abbreviateGender(animal.sex)}</span>
+              <span class="detail-item"><span class="label">${i18n('card.age_label')}</span> ${truncateAgeToYears(animal.age)}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-item"><span class="label">${i18n('card.color_label')}</span> ${animal.color || i18n('card.color_unknown')}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-item"><span class="label">${i18n('card.good_with_label')}</span> ${i18n('card.compat_kids')} ${kids}, ${i18n('card.compat_dogs')} ${dogs}, ${i18n('card.compat_cats')} ${cats}</span>
+            </div>
+            <div class="detail-row detail-row--split">
+              <span class="detail-item"><span class="label">${i18n('card.energy_label')}</span> ${abbreviateEnergy(bn?.energyLevel_match)}</span>
+              <span class="detail-item"><span class="label">${i18n('card.special_needs_label')}</span> ${specialNeedsYesNo}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function showAnimalDetail(id) {
+  const animal = filteredAnimals.find(a => a.id === id) || allAnimals.find(a => a.id === id);
+  if (!animal) return;
+  
+  // Handle lead media: slot 2 video if available, else slot 1 photo
+  const galleryLoading = document.querySelector('#modalGallery .gallery-loading');
+  if (animal.video_url) {
+    galleryLoading.innerHTML = `<video src="${animal.video_url}" class="modal-photo" autoplay loop muted playsinline onclick="event.preventDefault(); openLightbox('${animal.video_url}', 'video')"></video>`;
+  } else {
+    const img = document.createElement('img');
+    img.id = 'modalPhoto';
+    img.className = 'modal-photo';
+    img.src = animal.photoUrl || PLACEHOLDER_DATA_URI;
+    img.onerror = function() { this.src = PLACEHOLDER_DATA_URI; };
+    galleryLoading.innerHTML = '';
+    galleryLoading.appendChild(img);
+  }
+  
+  // Populate modal details
+  document.getElementById('modalName').textContent = animal.name;
+  document.getElementById('modalGender').textContent = animal.sex;
+  document.getElementById('modalAge').textContent = animal.age;
+  document.getElementById('modalColor').textContent = animal.color;
+  
+  // Show score if available
+  const scoreContainer = document.getElementById('modalScoreContainer');
+  const scoreValue = document.getElementById('modalScore');
+  if (animal.matchScore !== undefined) {
+    scoreContainer.style.display = 'block';
+    scoreValue.textContent = `${animal.matchScore}%`;
+  } else {
+    scoreContainer.style.display = 'none';
+  }
+  
+  // Bio with language fallback chain
+  const bioText = currentLang === 'es'
+    ? (animal.bio_es_long || animal.bio_en_long || animal.description || '')
+    : (animal.bio_en_long || animal.description || '');
+  document.getElementById('modalDescription').textContent = bioText || i18n('modal.default_description');
+  
+  // Show modal
+  elements.modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Load photo gallery asynchronously
+  loadModalGallery(animal);
+}
+
+function closeModal() {
+  elements.modal.classList.remove('active');
+  document.body.style.overflow = '';
+  // Reset gallery to single photo placeholder
+  document.getElementById('modalGallery').innerHTML = '<div class="gallery-loading"><img id="modalPhoto" src="" alt="" class="modal-photo"></div>';
+}
+
+// Gallery items for lightbox navigation (module scope) — {url, type: 'photo'|'video'}
+let _galleryItems = [];
+
+async function loadModalGallery(animal) {
+  const galleryContainer = document.getElementById('modalGallery');
+  
+  try {
+    const animalId = animal.animalId || animal.id;
+    const response = await fetch(`${API_BASE}/photos/${animalId}`);
+    const result = await response.json();
+    
+    if (!result.success || !result.data) return;
+    
+    const strip = result.data.strip || [];
+    const publicPhotoUrl = animal.photoUrl || '';
+    
+    // Filter: strip positions 2+, photos only (skip videos), sorted by position
+    const nonPublicPhotos = strip
+      .filter(p => p.stripPosition > 1)
+      .filter(p => p.mediaType !== 'video')
+      .sort((a, b) => a.stripPosition - b.stripPosition);
+    
+    // Build thumbnail list: real photos only, up to 5. No logo padding.
+    const photos = [];
+
+    // When video is lead, slot 1 photo becomes the first thumbnail
+    if (animal.video_url && publicPhotoUrl) {
+      photos.push({ url: publicPhotoUrl, type: 'photo' });
+    }
+
+    for (let i = 0; i < 5 && i < nonPublicPhotos.length; i++) {
+      photos.push({ url: nonPublicPhotos[i].photoUrl || nonPublicPhotos[i].fileUrl, type: 'photo' });
+    }
+    // Add public photo if not already included and we have room (non-video case)
+    if (!animal.video_url && publicPhotoUrl && photos.length < 5 && !photos.some(p => p.url === publicPhotoUrl)) {
+      photos.push({ url: publicPhotoUrl, type: 'photo' });
+    }
+    
+    // Cap at 5
+    photos.splice(5);
+    
+    // If no photos at all, keep showing the lead (video or placeholder)
+    if (photos.length === 0) return;
+    
+    // Build lightbox rotation: video first (if present), then all photos
+    if (animal.video_url) {
+      _galleryItems = [{ url: animal.video_url, type: 'video' }, ...photos];
+    } else {
+      _galleryItems = photos.slice();
+    }
+
+    if (animal.video_url) {
+      // Video lead: keep existing <video> in gallery-loading, add photo thumbnails below
+      const existingLead = galleryContainer.querySelector('.gallery-loading');
+      const leadHtml = existingLead ? existingLead.outerHTML : '';
+      galleryContainer.innerHTML = `
+        <div class="gallery-layout">
+          <div class="gallery-main">${leadHtml}</div>
+          <div class="gallery-grid">
+            ${photos.map(p => `
+              <div class="gallery-grid-item">
+                <img src="${p.url}" alt="" class="gallery-img"
+                     onclick="openLightbox('${p.url}', 'photo')">
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    } else {
+      // Photo lead: first photo is main, rest are thumbnails
+      const showThumbs = photos.length > 1;
+      galleryContainer.innerHTML = `
+        <div class="gallery-layout${showThumbs ? '' : ' gallery-single'}">
+          <div class="gallery-main">
+            <img src="${photos[0].url}" alt="" class="gallery-img"
+                 onclick="openLightbox('${photos[0].url}', 'photo')">
+          </div>
+          ${showThumbs ? `
+            <div class="gallery-grid">
+              ${photos.slice(1).map(p => `
+                <div class="gallery-grid-item">
+                  <img src="${p.url}" alt="" class="gallery-img"
+                       onclick="openLightbox('${p.url}', 'photo')">
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+  } catch (err) {
+    console.error('Gallery load failed:', err);
+  }
+}
+
+// ============ Lightbox with Arrow Navigation (photos + video) ============
+
+let _lightboxItems = [];
+let _lightboxIndex = 0;
+
+function _renderLightboxMedia(item) {
+  if (item.type === 'video') {
+    return `<video id="lightboxNavMedia" src="${item.url}" controls autoplay loop muted playsinline
+              style="max-width:90vw; max-height:90vh; display:block; border-radius:8px;"></video>`;
+  }
+  return `<img id="lightboxNavMedia" src="${item.url}" alt=""
+            style="max-width:90vw; max-height:90vh; display:block; border-radius:8px;">`;
+}
+
+function openLightbox(url, type) {
+  _lightboxItems = _galleryItems.slice();
+  _lightboxIndex = _lightboxItems.findIndex(p => p.url === url);
+  if (_lightboxIndex < 0) _lightboxIndex = 0;
+
+  const item = _lightboxItems[_lightboxIndex];
+  const showArrows = _lightboxItems.length > 1;
+  const overlay = document.createElement('div');
+  overlay.className = 'photo-lightbox';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  overlay.innerHTML = `
+    <div class="lightbox-image-wrap" onclick="event.stopPropagation()">
+      ${showArrows ? `
+        <button class="lightbox-nav lightbox-nav-left" onclick="event.stopPropagation(); lightboxNav(-1)" aria-label="${i18n('lightbox.prev_aria')}">\u2039</button>
+      ` : ''}
+      ${_renderLightboxMedia(item)}
+      ${showArrows ? `
+        <button class="lightbox-nav lightbox-nav-right" onclick="event.stopPropagation(); lightboxNav(1)" aria-label="${i18n('lightbox.next_aria')}">\u203A</button>
+      ` : ''}
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+// Backward compat alias for inline onclick handlers
+function openPhotoLightbox(url) { openLightbox(url, 'photo'); }
+
+function lightboxNav(delta) {
+  if (_lightboxItems.length <= 1) return;
+  _lightboxIndex = (_lightboxIndex + delta + _lightboxItems.length) % _lightboxItems.length;
+  const item = _lightboxItems[_lightboxIndex];
+  const old = document.getElementById('lightboxNavMedia');
+  if (!old || !item) return;
+
+  if (item.type === 'video' && old.tagName === 'VIDEO') {
+    old.src = item.url;
+  } else if (item.type === 'photo' && old.tagName === 'IMG') {
+    old.src = item.url;
+  } else {
+    // Type changed — swap element
+    const temp = document.createElement('div');
+    temp.innerHTML = _renderLightboxMedia(item);
+    old.replaceWith(temp.firstElementChild);
+  }
+}
+
+function clearFilters() {
+  // Uncheck all checkboxes for all filter groups
+  const checkboxFilters = [
+    'ageFilter', 'sexFilter', 'energyLevel', 
+    'goodWithCats', 'goodWithDogs', 'goodWithKids', 'specialNeeds'
+  ];
+  
+  checkboxFilters.forEach(filterName => {
+    document.querySelectorAll(`input[name="${filterName}"]`).forEach(cb => {
+      cb.checked = false;
+    });
+  });
+  
+  // Clear search
+  elements.searchInput.value = '';
+  
+  applyFilters();
+}
+
+function showError(message) {
+  elements.animalsGrid.innerHTML = `
+    <div class="error-state">
+      <p>😿 ${message}</p>
+      <button onclick="location.reload()" class="btn btn-secondary">${i18n('btn.retry')}</button>
+    </div>
+  `;
+}
+
+// Utility: Debounce
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Make functions globally available for onclick handlers
+window.showAnimalDetail = showAnimalDetail;
+window.closeModal = closeModal;
+window.clearFilters = clearFilters;
+window.switchSpecies = switchSpecies;

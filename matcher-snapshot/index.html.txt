@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find your perfect pet companion at Four Legs Good Animal Rescue">
+  <meta name="theme-color" content="#C4753B">
+  <title>Browse Your Perfect Pet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>????</text></svg>">
+</head>
+<body>
+  <div id="app">
+    <!-- Frozen Header - everything above the animal cards -->
+    <div class="frozen-header">
+    <!-- Hero Header -->
+    <header class="hero">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="langBtnEn" data-lang="en">English</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" id="langBtnEs" data-lang="es">Español</button>
+      </div>
+      <div class="hero-content">
+        <img src="logo.jpg" alt="Four Legs Good Animal Rescue" class="hero-logo">
+        <div class="hero-title">
+          <h1>Browse Your Perfect Pet</h1>
+        </div>
+        <a href="https://custom-search.4lgshelterapp.duckdns.org/" target="_blank" rel="noopener" class="hero-cta">Know What You Want? Search Here</a>
+      </div>
+    </header>
+
+    <!-- Species Tabs -->
+    <section class="species-tabs-section">
+      <div class="container">
+        <div class="species-tabs-wrapper">
+          <span class="filter-hint">Check all that apply below:</span>
+          <div class="species-tabs">
+          <button class="species-tab active" data-species="dog" onclick="switchSpecies('dog')">
+            🐕 Dogs
+          </button>
+          <button class="species-tab" data-species="cat" onclick="switchSpecies('cat')">
+            🐱 Cats
+          </button>
+          <button class="species-tab" data-species="small" onclick="switchSpecies('small')">
+            🐰 Smalls
+          </button>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- Filters - Compact layout -->
+    <section class="filters-section">
+      <div class="container">
+        <div class="filters-card">
+          <div class="filters">
+            <input type="hidden" id="speciesFilter" value="dog">
+
+            <div class="filter-group">
+              <label>Age</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="ageFilter" value="young"> Young</label>
+                <label class="checkbox-label"><input type="checkbox" name="ageFilter" value="adult"> Adult</label>
+                <label class="checkbox-label"><input type="checkbox" name="ageFilter" value="senior"> Senior</label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Sex</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="sexFilter" value="male"> M</label>
+                <label class="checkbox-label"><input type="checkbox" name="sexFilter" value="female"> F</label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label for="searchInput">Color</label>
+              <input type="text" id="searchInput" placeholder="e.g. tabby, black...">
+            </div>
+
+            <div class="filter-group">
+              <label>Energy</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="energyLevel" value="unknown"> Unknown</label>
+                <label class="checkbox-label"><input type="checkbox" name="energyLevel" value="low"> Low</label>
+                <label class="checkbox-label"><input type="checkbox" name="energyLevel" value="medium"> Med</label>
+                <label class="checkbox-label"><input type="checkbox" name="energyLevel" value="high"> High</label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Special Needs</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="specialNeeds" value="yes"> Yes</label>
+                <label class="checkbox-label"><input type="checkbox" name="specialNeeds" value="no"> No</label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Good with Kids</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="goodWithKids" value="unknown"> Unknown</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithKids" value="yes"> Yes</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithKids" value="somewhat"> Some</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithKids" value="no"> No</label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Good with Dogs</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="goodWithDogs" value="unknown"> Unknown</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithDogs" value="yes"> Yes</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithDogs" value="somewhat"> Some</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithDogs" value="no"> No</label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label>Good with Cats</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="goodWithCats" value="unknown"> Unknown</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithCats" value="yes"> Yes</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithCats" value="somewhat"> Some</label>
+                <label class="checkbox-label"><input type="checkbox" name="goodWithCats" value="no"> No</label>
+              </div>
+            </div>
+        </div>
+        <!-- Results count + Adoption links on one line -->
+        <div class="results-adoption-row">
+          <div class="results-count">
+            Showing <span>0</span> adoptable <span>dogs</span>
+          </div>
+          <div class="adoption-links">
+            <span class="adoption-links-label">Ready to adopt?</span>
+            <a href="https://johnv80.sg-host.com/adopt/#adoption-application" target="_blank" rel="noopener" class="adoption-link adoption-link-primary">
+              Apply to Adopt
+            </a>
+            <a href="https://dogwalker.4lgshelterapp.duckdns.org/adoption-pdfs/blank-english.pdf" target="_blank" rel="noopener" class="adoption-link">
+              English PDF
+            </a>
+            <a href="https://dogwalker.4lgshelterapp.duckdns.org/adoption-pdfs/blank-spanish.pdf" target="_blank" rel="noopener" class="adoption-link">
+              Español PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div><!-- End frozen-header -->
+
+    <!-- Animal Grid -->
+    <main class="animals-section">
+      <div class="container">
+        <div id="animalsGrid" class="animals-grid">
+        </div>
+        <div id="loadingState" class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading adoptable pets...</p>
+        </div>
+        <div id="emptyState" class="empty-state" style="display: none;">
+          <p id="emptyMessage">🐾 No pets match your filters</p>
+          <button onclick="clearFilters()" class="btn btn-secondary">Clear Filters</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Animal Detail Modal -->
+    <div id="animalModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-body">
+          <div class="modal-photo-container" id="modalGallery">
+            <div class="gallery-loading">
+              <img id="modalPhoto" src="" alt="" class="modal-photo">
+            </div>
+          </div>
+          <div class="modal-info">
+            <h2 id="modalName">Animal Name</h2>
+
+            <div class="modal-details-grid">
+              <div class="detail-item">
+                <span class="detail-label">Sex</span>
+                <span id="modalGender" class="detail-value">-</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Age</span>
+                <span id="modalAge" class="detail-value">-</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Color</span>
+                <span id="modalColor" class="detail-value">-</span>
+              </div>
+              <div class="detail-item" id="modalScoreContainer" style="display: none;">
+                <span class="detail-label">Match Score</span>
+                <span id="modalScore" class="detail-value score-badge">-</span>
+              </div>
+            </div>
+
+            <div class="modal-section">
+              <h4>📝 About</h4>
+              <p id="modalDescription">-</p>
+            </div>
+
+            <div class="modal-cta">
+              <p class="adopt-cta">🐾 Please adopt me at <strong>(845) 414-9700</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>🐾 Four Legs Good Animal Rescue</p>
+        <p class="footer-note">Helping pets find loving homes</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
