@@ -1,0 +1,194 @@
+# Slot-1 Globe-Wins Bulk Execution
+**Date:** 2026-06-21 04:42:50 UTC
+**Mode:** Read-write. Only column modified: `strip_position`.
+**Backup:** `/home/shelter/shelter-apps/data/shelter-backup-slot1fix-20260621.db` (untouched)
+
+## Counts
+- SM feed animals: 507 (475 with WEBSITEMEDIAID)
+- **In-scope for correction:** 150
+  - LIBRARY swaps: 133
+  - STRIP swaps: 17
+- **Committed:** 150
+- **Failed (rolled back):** 0
+- Already correct (incl. canaries): 305
+- Excluded non-SM slot-1: 5
+- Excluded globe not in DB: 1
+
+## Per-Animal Execution Log
+
+| # | shelter_code | swap_type | demoted_smid | promoted_smid | N | post_pos1_smid | assertion |
+|---|---|---|---|---|---|---|---|
+| 1 | A2023030 | LIBRARY | 7947 | 8732 | 0 | 8732 | PASS |
+| 2 | A2024017 | LIBRARY | 4167 | 8942 | 0 | 8942 | PASS |
+| 3 | A2024048 | STRIP | 8484 | 7852 | 2 | 7852 | PASS |
+| 4 | A2025138 | LIBRARY | 7812 | 8941 | 0 | 8941 | PASS |
+| 5 | A2025167 | STRIP | 6492 | 6949 | 2 | 6949 | PASS |
+| 6 | A2025233 | LIBRARY | 7642 | 8629 | 0 | 8629 | PASS |
+| 7 | A2026025 | LIBRARY | 8033 | 8938 | 0 | 8938 | PASS |
+| 8 | A2026036 | STRIP | 8147 | 8339 | 2 | 8339 | PASS |
+| 9 | A2026048 | STRIP | 8294 | 8366 | 2 | 8366 | PASS |
+| 10 | A2026050 | LIBRARY | 8311 | 8731 | 0 | 8731 | PASS |
+| 11 | A2026098 | LIBRARY | 9418 | 9423 | 0 | 9423 | PASS |
+| 12 | R2024018 | STRIP | 3076 | 5587 | 3 | 5587 | PASS |
+| 13 | R2024034 | LIBRARY | 4723 | 8648 | 0 | 8648 | PASS |
+| 14 | R2025053 | STRIP | 7727 | 8070 | 3 | 8070 | PASS |
+| 15 | R2026006 | LIBRARY | 8454 | 9306 | 0 | 9306 | PASS |
+| 16 | S2024718 | STRIP | 2888 | 4524 | 3 | 4524 | PASS |
+| 17 | S2025708 | LIBRARY | 7972 | 8937 | 0 | 8937 | PASS |
+| 18 | S2025810 | LIBRARY | 6976 | 8564 | 0 | 8564 | PASS |
+| 19 | S2025833 | STRIP | 7149 | 7147 | 2 | 7147 | PASS |
+| 20 | S2025883 | LIBRARY | 7140 | 9337 | 0 | 9337 | PASS |
+| 21 | S2025961 | STRIP | 7209 | 8570 | 3 | 8570 | PASS |
+| 22 | S2026031 | LIBRARY | 8481 | 8849 | 0 | 8849 | PASS |
+| 23 | S2026045 | STRIP | 8479 | 8478 | 2 | 8478 | PASS |
+| 24 | S2026126 | STRIP | 8476 | 8608 | 5 | 8608 | PASS |
+| 25 | S2026132 | LIBRARY | 8182 | 8631 | 0 | 8631 | PASS |
+| 26 | S2026133 | STRIP | 8185 | 8183 | 3 | 8183 | PASS |
+| 27 | S2026134 | STRIP | 8392 | 8393 | 6 | 8393 | PASS |
+| 28 | S2026144 | STRIP | None | 8316 | 2 | 8316 | PASS |
+| 29 | S2026155 | STRIP | 8344 | 8352 | 2 | 8352 | PASS |
+| 30 | S2026158 | LIBRARY | 8254 | 8692 | 0 | 8692 | PASS |
+| 31 | S2026219 | LIBRARY | 8414 | 8573 | 0 | 8573 | PASS |
+| 32 | S2026262 | LIBRARY | 9027 | 9143 | 0 | 9143 | PASS |
+| 33 | S2026276 | STRIP | 9009 | 9047 | 3 | 9047 | PASS |
+| 34 | S2026291 | LIBRARY | 8615 | 9216 | 0 | 9216 | PASS |
+| 35 | S2026292 | LIBRARY | 8620 | 9385 | 0 | 9385 | PASS |
+| 36 | S2026293 | LIBRARY | 8621 | 9386 | 0 | 9386 | PASS |
+| 37 | S2026294 | LIBRARY | 8622 | 9384 | 0 | 9384 | PASS |
+| 38 | S2026295 | LIBRARY | 8623 | 9215 | 0 | 9215 | PASS |
+| 39 | S2026296 | LIBRARY | 8624 | 9383 | 0 | 9383 | PASS |
+| 40 | S2026302 | LIBRARY | 8639 | 9021 | 0 | 9021 | PASS |
+| 41 | S2026303 | LIBRARY | 8640 | 9020 | 0 | 9020 | PASS |
+| 42 | S2026306 | LIBRARY | 8642 | 9022 | 0 | 9022 | PASS |
+| 43 | S2026320 | STRIP | 8667 | 8986 | 6 | 8986 | PASS |
+| 44 | S2026346 | LIBRARY | 8738 | 9128 | 0 | 9128 | PASS |
+| 45 | S2026347 | LIBRARY | 9046 | 9123 | 0 | 9123 | PASS |
+| 46 | S2026348 | LIBRARY | 8734 | 9127 | 0 | 9127 | PASS |
+| 47 | S2026349 | LIBRARY | 8742 | 9126 | 0 | 9126 | PASS |
+| 48 | S2026350 | LIBRARY | 8741 | 9124 | 0 | 9124 | PASS |
+| 49 | S2026353 | LIBRARY | 9038 | 9288 | 0 | 9288 | PASS |
+| 50 | S2026359 | LIBRARY | 8757 | 9241 | 0 | 9241 | PASS |
+| 51 | S2026363 | LIBRARY | 8764 | 9308 | 0 | 9308 | PASS |
+| 52 | S2026364 | LIBRARY | 8765 | 9307 | 0 | 9307 | PASS |
+| 53 | S2026365 | LIBRARY | 8766 | 9309 | 0 | 9309 | PASS |
+| 54 | S2026366 | LIBRARY | 8767 | 9006 | 0 | 9006 | PASS |
+| 55 | S2026367 | LIBRARY | 8768 | 9033 | 0 | 9033 | PASS |
+| 56 | S2026368 | LIBRARY | 8769 | 9113 | 0 | 9113 | PASS |
+| 57 | S2026371 | LIBRARY | 8772 | 9032 | 0 | 9032 | PASS |
+| 58 | S2026392 | LIBRARY | 8819 | 9234 | 0 | 9234 | PASS |
+| 59 | S2026393 | LIBRARY | 8818 | 9235 | 0 | 9235 | PASS |
+| 60 | S2026394 | LIBRARY | 8820 | 9236 | 0 | 9236 | PASS |
+| 61 | S2026395 | LIBRARY | 8826 | 9459 | 0 | 9459 | PASS |
+| 62 | S2026396 | LIBRARY | 8827 | 9458 | 0 | 9458 | PASS |
+| 63 | S2026397 | LIBRARY | 8828 | 9457 | 0 | 9457 | PASS |
+| 64 | S2026398 | LIBRARY | 8829 | 9063 | 0 | 9063 | PASS |
+| 65 | S2026401 | LIBRARY | 8833 | 9065 | 0 | 9065 | PASS |
+| 66 | S2026402 | LIBRARY | 8832 | 9064 | 0 | 9064 | PASS |
+| 67 | S2026404 | LIBRARY | 9206 | 9350 | 0 | 9350 | PASS |
+| 68 | S2026405 | LIBRARY | 9207 | 9351 | 0 | 9351 | PASS |
+| 69 | S2026413 | LIBRARY | 8885 | 9480 | 0 | 9480 | PASS |
+| 70 | S2026414 | LIBRARY | 8886 | 9479 | 0 | 9479 | PASS |
+| 71 | S2026416 | LIBRARY | 8866 | 9089 | 0 | 9089 | PASS |
+| 72 | S2026417 | LIBRARY | 8864 | 9088 | 0 | 9088 | PASS |
+| 73 | S2026418 | LIBRARY | 8865 | 9090 | 0 | 9090 | PASS |
+| 74 | S2026420 | LIBRARY | 8877 | 9186 | 0 | 9186 | PASS |
+| 75 | S2026421 | LIBRARY | 8878 | 9185 | 0 | 9185 | PASS |
+| 76 | S2026436 | LIBRARY | 8969 | 9146 | 0 | 9146 | PASS |
+| 77 | S2026437 | LIBRARY | 8968 | 9145 | 0 | 9145 | PASS |
+| 78 | S2026440 | LIBRARY | 9016 | 9237 | 0 | 9237 | PASS |
+| 79 | S2026441 | LIBRARY | 9014 | 9238 | 0 | 9238 | PASS |
+| 80 | S2026443 | LIBRARY | 9013 | 9026 | 0 | 9026 | PASS |
+| 81 | S2026445 | LIBRARY | 8977 | 9219 | 0 | 9219 | PASS |
+| 82 | S2026447 | LIBRARY | 8978 | 9220 | 0 | 9220 | PASS |
+| 83 | S2026448 | LIBRARY | 8979 | 9221 | 0 | 9221 | PASS |
+| 84 | S2026451 | LIBRARY | 8990 | 9474 | 0 | 9474 | PASS |
+| 85 | S2026452 | LIBRARY | 8991 | 9478 | 0 | 9478 | PASS |
+| 86 | S2026453 | LIBRARY | 8992 | 9477 | 0 | 9477 | PASS |
+| 87 | S2026457 | LIBRARY | 8997 | 9102 | 0 | 9102 | PASS |
+| 88 | S2026468 | LIBRARY | 9058 | 9375 | 0 | 9375 | PASS |
+| 89 | S2026483 | LIBRARY | 9082 | 9402 | 0 | 9402 | PASS |
+| 90 | S2026484 | LIBRARY | 9086 | 9406 | 0 | 9406 | PASS |
+| 91 | S2026485 | LIBRARY | 9083 | 9404 | 0 | 9404 | PASS |
+| 92 | S2026486 | LIBRARY | 9085 | 9403 | 0 | 9403 | PASS |
+| 93 | S2026492 | LIBRARY | 9100 | 9192 | 0 | 9192 | PASS |
+| 94 | S2026495 | LIBRARY | 9117 | 9436 | 0 | 9436 | PASS |
+| 95 | S2026499 | LIBRARY | 9121 | 9464 | 0 | 9464 | PASS |
+| 96 | S2026500 | LIBRARY | 9116 | 9463 | 0 | 9463 | PASS |
+| 97 | S2026501 | LIBRARY | 9135 | 9391 | 0 | 9391 | PASS |
+| 98 | S2026502 | LIBRARY | 9134 | 9392 | 0 | 9392 | PASS |
+| 99 | S2026503 | LIBRARY | 9136 | 9470 | 0 | 9470 | PASS |
+| 100 | S2026505 | LIBRARY | 9131 | 9435 | 0 | 9435 | PASS |
+| 101 | S2026506 | LIBRARY | 9133 | 9434 | 0 | 9434 | PASS |
+| 102 | S2026507 | LIBRARY | 9138 | 9370 | 0 | 9370 | PASS |
+| 103 | S2026508 | LIBRARY | 9141 | 9372 | 0 | 9372 | PASS |
+| 104 | S2026509 | LIBRARY | 9139 | 9471 | 0 | 9471 | PASS |
+| 105 | S2026510 | LIBRARY | 9142 | 9472 | 0 | 9472 | PASS |
+| 106 | S2026511 | LIBRARY | 9147 | 9353 | 0 | 9353 | PASS |
+| 107 | S2026514 | LIBRARY | 9148 | 9156 | 0 | 9156 | PASS |
+| 108 | S2026515 | LIBRARY | 9149 | 9157 | 0 | 9157 | PASS |
+| 109 | S2026516 | LIBRARY | 9150 | 9255 | 0 | 9255 | PASS |
+| 110 | S2026517 | LIBRARY | 9152 | 9254 | 0 | 9254 | PASS |
+| 111 | S2026539 | LIBRARY | 9169 | 9330 | 0 | 9330 | PASS |
+| 112 | S2026540 | LIBRARY | 9172 | 9332 | 0 | 9332 | PASS |
+| 113 | S2026541 | LIBRARY | 9171 | 9331 | 0 | 9331 | PASS |
+| 114 | S2026542 | LIBRARY | 9170 | 9329 | 0 | 9329 | PASS |
+| 115 | S2026543 | LIBRARY | 9174 | 9253 | 0 | 9253 | PASS |
+| 116 | S2026560 | LIBRARY | 9214 | 9298 | 0 | 9298 | PASS |
+| 117 | S2026562 | LIBRARY | 9242 | 9244 | 0 | 9244 | PASS |
+| 118 | S2026563 | LIBRARY | 9243 | 9245 | 0 | 9245 | PASS |
+| 119 | S2026570 | LIBRARY | 9265 | 9299 | 0 | 9299 | PASS |
+| 120 | S2026577 | LIBRARY | 9272 | 9282 | 0 | 9282 | PASS |
+| 121 | S2026579 | LIBRARY | 9268 | 9281 | 0 | 9281 | PASS |
+| 122 | S2026580 | LIBRARY | 9270 | 9284 | 0 | 9284 | PASS |
+| 123 | S2026581 | LIBRARY | 9273 | 9280 | 0 | 9280 | PASS |
+| 124 | S2026582 | LIBRARY | 9267 | 9303 | 0 | 9303 | PASS |
+| 125 | S2026583 | LIBRARY | 9269 | 9279 | 0 | 9279 | PASS |
+| 126 | S2026584 | LIBRARY | 9271 | 9283 | 0 | 9283 | PASS |
+| 127 | S2026606 | LIBRARY | 9286 | 9388 | 0 | 9388 | PASS |
+| 128 | S2026611 | LIBRARY | 9311 | 9320 | 0 | 9320 | PASS |
+| 129 | S2026613 | LIBRARY | 9312 | 9338 | 0 | 9338 | PASS |
+| 130 | S2026614 | LIBRARY | 9314 | 9319 | 0 | 9319 | PASS |
+| 131 | S2026615 | LIBRARY | 9316 | 9333 | 0 | 9333 | PASS |
+| 132 | S2026637 | LIBRARY | 9359 | 9398 | 0 | 9398 | PASS |
+| 133 | S2026638 | LIBRARY | 9360 | 9399 | 0 | 9399 | PASS |
+| 134 | S2026643 | LIBRARY | 9376 | 9400 | 0 | 9400 | PASS |
+| 135 | S2026648 | LIBRARY | 9378 | 9397 | 0 | 9397 | PASS |
+| 136 | S2026657 | LIBRARY | 9416 | 9446 | 0 | 9446 | PASS |
+| 137 | W2025068 | LIBRARY | 6453 | 8751 | 0 | 8751 | PASS |
+| 138 | W2026044 | LIBRARY | 8793 | 9030 | 0 | 9030 | PASS |
+| 139 | W2026045 | LIBRARY | 8794 | 9380 | 0 | 9380 | PASS |
+| 140 | W2026046 | LIBRARY | 8797 | 9251 | 0 | 9251 | PASS |
+| 141 | W2026047 | LIBRARY | 8796 | 9250 | 0 | 9250 | PASS |
+| 142 | W2026048 | LIBRARY | 8795 | 9252 | 0 | 9252 | PASS |
+| 143 | W2026050 | LIBRARY | 8798 | 9460 | 0 | 9460 | PASS |
+| 144 | W2026051 | LIBRARY | 8799 | 9469 | 0 | 9469 | PASS |
+| 145 | W2026052 | LIBRARY | 8811 | 9248 | 0 | 9248 | PASS |
+| 146 | W2026053 | LIBRARY | 8812 | 9249 | 0 | 9249 | PASS |
+| 147 | W2026054 | LIBRARY | 8813 | 9246 | 0 | 9246 | PASS |
+| 148 | W2026057 | LIBRARY | 8821 | 9110 | 0 | 9110 | PASS |
+| 149 | W2026063 | LIBRARY | 9229 | 9347 | 0 | 9347 | PASS |
+| 150 | W2026070 | LIBRARY | 9262 | 9341 | 0 | 9341 | PASS |
+
+## Full-Population Verification (Step 5)
+
+**All 150 in-scope animals verified:** pos-1 `source_media_id` == live `WEBSITEMEDIAID` ✅
+
+## Non-SM Animals Confirmation (Step 6)
+
+| shelter_code | slot-1 source | untouched |
+|---|---|---|
+| A2026061 | activity | ✅ |
+| S20251008 | dashboard-upload | ✅ |
+| S2025963 | activity | ✅ |
+| S2026028 | activity | ✅ |
+| S2026078 | activity | ✅ |
+
+**All 5 untouched:** ✅
+
+## Matcher Spot Check (Step 7)
+
+| shelter_code | expected_wmid | photoUrl | match |
+|---|---|---|---|
+| A2023030 | 8732 | `https://service.sheltermanager.com/asmservice?account=gw3095&method=media_image&mediaid=8732&ts=1777411328.0` | ✅ |
+| A2023278 | 10 | `https://service.sheltermanager.com/asmservice?account=gw3095&method=media_image&mediaid=10&ts=1696092202.0` | ✅ |
+| A2023287 | 4499 | `https://service.sheltermanager.com/asmservice?account=gw3095&method=media_image&mediaid=4499&ts=1738182185.0` | ✅ |
