@@ -1,4 +1,4 @@
-# Weekly Health Check — 2026-06-29 21:19:17 UTC
+# Weekly Health Check — 2026-06-29 21:19:20 UTC
 
 ## Verdict
 
@@ -12,10 +12,10 @@
 | Metric | Value |
 |--------|-------|
 | Uptime | up 15 weeks, 1 day, 32 minutes (since 2026-03-15 20:47:16) |
-| Memory | 1019MB / 3915MB used (2896MB available, 26%) |
+| Memory | 1024MB / 3915MB used (2891MB available, 26%) |
 | Swap | 72MB / 511MB (14%) |
 | Disk | 35G / 79G (47%, 40G free) |
-| Load avg | 0.00 0.01 0.00 (2 CPUs) |
+| Load avg | 0.08 0.03 0.01 (2 CPUs) |
 
 ## Network
 
@@ -41,10 +41,10 @@
 
 ```
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-rover     105776  0.6 10.6 54697324 425120 ?     Ssl  Jun28  16:35 openclaw
-shelter   113835  0.2  5.6 22448252 226860 ?     Ssl  Jun28   4:05 /usr/bin/node dist/server.js
-caddy        725  0.0  0.8 1277208 35544 ?       Ssl  Mar15  50:10 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
-root      124752  0.0  0.8 100052 35032 ?        S<s  14:13   0:05 /usr/lib/systemd/systemd-journald
+rover     105776  0.6 10.6 54697324 425136 ?     Ssl  Jun28  16:35 openclaw
+shelter   113835  0.2  5.6 22448764 227576 ?     Ssl  Jun28   4:05 /usr/bin/node dist/server.js
+caddy        725  0.0  0.8 1277208 35548 ?       Ssl  Mar15  50:10 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+root      124752  0.0  0.8 100312 35180 ?        S<s  14:13   0:05 /usr/lib/systemd/systemd-journald
 root      129016  0.0  0.2  15000 10668 ?        Ss   20:01   0:00 sshd: root@pts/0
 ```
 
