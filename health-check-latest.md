@@ -1,8 +1,8 @@
-# Weekly Health Check — 2026-06-29 20:58:09 UTC
+# Weekly Health Check — 2026-06-29 21:19:17 UTC
 
 ## Verdict
 
-⚠️ **1 flag(s) fired:**
+🟡 **1 informational note(s):**
 - ℹ️ DB: table volunteer_declines is empty
 
 ---
@@ -11,11 +11,11 @@
 
 | Metric | Value |
 |--------|-------|
-| Uptime | up 15 weeks, 1 day, 10 minutes (since 2026-03-15 20:47:16) |
-| Memory | 1116MB / 3915MB used (2799MB available, 28%) |
+| Uptime | up 15 weeks, 1 day, 32 minutes (since 2026-03-15 20:47:16) |
+| Memory | 1019MB / 3915MB used (2896MB available, 26%) |
 | Swap | 72MB / 511MB (14%) |
 | Disk | 35G / 79G (47%, 40G free) |
-| Load avg | 0.08 0.11 0.06 (2 CPUs) |
+| Load avg | 0.00 0.01 0.00 (2 CPUs) |
 
 ## Network
 
@@ -41,10 +41,10 @@
 
 ```
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-rover     105776  0.6 12.1 54759876 487572 ?     Ssl  Jun28  16:05 openclaw
-shelter   113835  0.2  5.8 22458748 236432 ?     Ssl  Jun28   4:03 /usr/bin/node dist/server.js
-caddy        725  0.0  0.8 1277208 35728 ?       Ssl  Mar15  50:10 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
-root      124752  0.0  0.8  99948 34328 ?        S<s  14:13   0:05 /usr/lib/systemd/systemd-journald
+rover     105776  0.6 10.6 54697324 425120 ?     Ssl  Jun28  16:35 openclaw
+shelter   113835  0.2  5.6 22448252 226860 ?     Ssl  Jun28   4:05 /usr/bin/node dist/server.js
+caddy        725  0.0  0.8 1277208 35544 ?       Ssl  Mar15  50:10 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+root      124752  0.0  0.8 100052 35032 ?        S<s  14:13   0:05 /usr/lib/systemd/systemd-journald
 root      129016  0.0  0.2  15000 10668 ?        Ss   20:01   0:00 sshd: root@pts/0
 ```
 
@@ -106,11 +106,11 @@ root      129016  0.0  0.2  15000 10668 ?        Ss   20:01   0:00 sshd: root@pt
 | Scheduler | Latest | Stale | Weight |
 |-----------|--------|-------|--------|
 | Feeding archive (midnight ET) | 2026-06-27 | 2d | CRITICAL |
-| Activity archive (23:55 ET) | 2026-06-21 | 8d | CRITICAL |
-| SM photo sync (2am ET) | 2026-06-29 06:00:01 | 14h | CRITICAL |
-| Adoptable check (9am ET) | 2026-06-29T13:00:00.013Z | 7h | CRITICAL |
-| Generic bio (9:30am ET) | unknown | n/ad | INFORMATIONAL |
-| Searcher snapshot (00:10 ET) | unknown | n/ad | INFORMATIONAL |
+| Activity auto-close (23:55 ET) | 2026-06-29 | 0d | CRITICAL |
+| SM photo sync (2am ET) | 2026-06-29 06:00:01 | 15h | CRITICAL |
+| Adoptable check (9am ET) | 2026-06-29T13:00:00.013Z | 8h | CRITICAL |
+| Generic bio (9:30am ET) | 2026-06-29T13:30:00.026Z | 0d | INFORMATIONAL |
+| Searcher snapshot (00:10 ET) | 2026-06-28 | 1d | INFORMATIONAL |
 
 ## Backups
 
