@@ -1,4 +1,4 @@
-# Weekly Health Check — 2026-06-29 20:57:52 UTC
+# Weekly Health Check — 2026-06-29 20:58:09 UTC
 
 ## Verdict
 
@@ -12,10 +12,10 @@
 | Metric | Value |
 |--------|-------|
 | Uptime | up 15 weeks, 1 day, 10 minutes (since 2026-03-15 20:47:16) |
-| Memory | 1129MB / 3915MB used (2786MB available, 28%) |
+| Memory | 1116MB / 3915MB used (2799MB available, 28%) |
 | Swap | 72MB / 511MB (14%) |
 | Disk | 35G / 79G (47%, 40G free) |
-| Load avg | 0.02 0.10 0.06 (2 CPUs) |
+| Load avg | 0.08 0.11 0.06 (2 CPUs) |
 
 ## Network
 
@@ -44,7 +44,7 @@ USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 rover     105776  0.6 12.1 54759876 487572 ?     Ssl  Jun28  16:05 openclaw
 shelter   113835  0.2  5.8 22458748 236432 ?     Ssl  Jun28   4:03 /usr/bin/node dist/server.js
 caddy        725  0.0  0.8 1277208 35728 ?       Ssl  Mar15  50:10 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
-root      124752  0.0  0.8  99820 34056 ?        S<s  14:13   0:05 /usr/lib/systemd/systemd-journald
+root      124752  0.0  0.8  99948 34328 ?        S<s  14:13   0:05 /usr/lib/systemd/systemd-journald
 root      129016  0.0  0.2  15000 10668 ?        Ss   20:01   0:00 sshd: root@pts/0
 ```
 
@@ -127,7 +127,7 @@ root      129016  0.0  0.2  15000 10668 ?        Ss   20:01   0:00 sshd: root@pt
 | Check | Value |
 |-------|-------|
 | grok_imagine video count | 113 |
-| Prior count (state file) | n/a (first run) |
+| Prior count (state file) | 113 |
 | Resumption detected | no |
 
 ## Security
