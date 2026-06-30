@@ -1,93 +1,108 @@
-# Featured Six Email — "??" Charset Diagnosis
+# Website 4 — EIN String Diagnosis
 
-**Date:** 2026-06-30 22:17 UTC
-
----
-
-## 1. The Template Character
-
-In `featuredRotation.ts` line 448, the "Currently Featured" header reads:
-
-```
-'�\uDCCC Currently Featured'
-```
-
-Hex dump of that line:
-```
-27 ef bf bd 5c 75 44 43 43 43 20 43 75 72 72 65 6e 74 6c 79 ...
-```
-
-- `ef bf bd` = **U+FFFD** (Unicode REPLACEMENT CHARACTER) — the high surrogate was already destroyed and replaced
-- `\uDCCC` = a **lone low surrogate** (0xDCCC) left as a literal escape — invalid Unicode on its own
-
-This is a **broken surrogate pair**. The original emoji was a two-code-unit character (above U+FFFF in UTF-16). At some point during file creation or editing, the high surrogate was corrupted and replaced with U+FFFD, while the low surrogate `\uDCCC` survived as a literal escape sequence.
-
-### What was the intended character?
-
-The low surrogate 0xDCCC uniquely identifies the emoji given common high surrogates:
-
-| High surrogate | Codepoint | Character | Likely? |
-|---|---|---|---|
-| 0xD83C | U+1F0CC | 🃌 (playing card) | No |
-| **0xD83D** | **U+1F4CC** | **📌 (pushpin)** | **Yes — perfect for "Currently Featured"** |
-| 0xD83E | U+1F8CC | (unassigned) | No |
-
-The intended character was almost certainly **📌** (U+1F4CC, pushpin emoji).
+**Date:** 2026-06-30 22:38 UTC  
+**Task:** Locate all instances of "EIN # 27-039-7638" in the WordPress theme for scope of upcoming change to "EIN # 27-0397638".
 
 ---
 
-## 2. Why "??"
+## All Instances Found
 
-The cause is **a broken literal in the source file**, not an encoding/charset problem.
+### Instance 1 — footer.php line 13 (PRIMARY)
 
-- The file is properly UTF-8 encoded (`file` reports `Unicode text, UTF-8 text`)
-- But the emoji on line 448 is already corrupted in the source: U+FFFD + bare `\uDCCC`
-- When Node.js evaluates this string, U+FFFD renders as one "?" and the lone surrogate renders as another "?" → **"??"**
+**File:** `footer.php` on SiteGround (live, Jun 1 2026)  
+**Line 13:**
 
-The Resend API sends email as UTF-8 by default. The HTML template has no `<meta charset>` tag, but that is irrelevant here because the problem is upstream — the bytes in the source are already wrong before any email is composed.
+```php
+<p><?php esc_html_e('EIN # 27-039-7638', 'four-legs-good'); ?></p>
+```
+
+**Context (lines 5–15):**
+```php
+                    <?php else : ?>
+                        <div class="footer-logo">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/4lg_logo.jpg'); ?>" alt="<?php esc_attr_e('Four Legs Good', 'four-legs-good'); ?>">
+                            <div class="footer-logo-text"><?php esc_html_e('Four Legs Good', 'four-legs-good'); ?><span><?php esc_html_e('Animal Rescue', 'four-legs-good'); ?></span></div>
+                        </div>
+                        <p><?php esc_html_e('A 501(c)(3) nonprofit no-kill animal rescue serving Rockland County, NY', 'four-legs-good'); ?></p>
+                        <p><?php esc_html_e('EIN # 27-039-7638', 'four-legs-good'); ?></p>
+                        <button type="button" class="btn-primary contact-modal-trigger" id="contact-modal-trigger" aria-haspopup="dialog"><?php esc_html_e('Contact Us', 'four-legs-good'); ?></button>
+                    <?php endif; ?>
+                </div>
+                <div class="footer-col">
+```
+
+**Notes:**
+- Wrapped in `esc_html_e()` with textdomain `'four-legs-good'` [VERIFIED — line 13 of live footer.php via SFTP]
+- Inside the `else` fallback of `is_active_sidebar('footer-brand')` — renders when no widget overrides the footer brand area
+- This is the source string that gettext uses as both the lookup key and the English fallback
+
+### Instance 2 — es_ES.po lines 32–33 (TRANSLATION)
+
+**File:** `languages/es_ES.po` on SiteGround (Jun 1 2026)  
+**Lines 32–33:**
+
+```po
+msgid "EIN # 27-039-7638"
+msgstr "EIN # 27-039-7638"
+```
+
+**Context (lines 28–40):**
+```po
+msgstr "Una organización sin fines de lucro 501(c)(3) de rescate animal sin sacrificio que sirve al Condado de Rockland, NY"
+
+msgid "EIN # 27-039-7638"
+msgstr "EIN # 27-039-7638"
+
+#: footer.php:13 footer.php:77
+msgid "Contact Us"
+msgstr "Contáctanos"
+
+#: footer.php:20 header.php:18 header.php:28
+msgid "Adopt"
+```
+
+**Notes:**
+- The `msgid` (lookup key) must exactly match the source string in `esc_html_e()` — if footer.php changes, this msgid must change to match [VERIFIED — gettext key-matching semantics]
+- The `msgstr` is also "EIN # 27-039-7638" (identical to English — the EIN number is the same in Spanish)
+- The compiled `es_ES.mo` was built from this .po file
+
+### Instance 3 — four-legs-good.pot (NOT PRESENT)
+
+**File:** `languages/four-legs-good.pot` (May 24 2026)  
+**Result:** No "EIN" or "27-039" match [VERIFIED — grep returned 0 matches]
+
+The .pot template predates the EIN addition (May 24 vs Jun 1). The .po entry was added manually without regenerating the .pot. This is cosmetically out of sync but functionally irrelevant — WordPress uses the .mo, not the .pot, at runtime.
+
+### No Other Instances
+
+All other theme PHP files were checked via SFTP pull + grep:
+
+| File | EIN present? |
+|------|-------------|
+| functions.php | No |
+| front-page.php | No |
+| header.php | No |
+| index.php | No |
+| page-events.php | No |
+| page-stories.php | No |
+| page.php | No |
+| single.php | No |
+| singular.php | No |
+
+[VERIFIED — grep -c "EIN\|27-039" on all pulled files returned 0]
 
 ---
 
-## 3. The Decisive Test — Do Other Emoji Headers Work?
+## Assessment
 
-The other two section headers in the same function (lines 452–453):
+### Change scope: 3 files, multi-file edit + .mo recompilation required
 
-```typescript
-html += renderSection('⬆️ Swap In Now', edition.newSix);
-html += renderSection('⏭️ Coming Next Week', edition.nextSix);
-```
+| File | Change needed |
+|------|--------------|
+| `footer.php` line 13 | Change `'EIN # 27-039-7638'` → `'EIN # 27-0397638'` inside `esc_html_e()` |
+| `es_ES.po` lines 32–33 | Change both `msgid` and `msgstr` from `"EIN # 27-039-7638"` → `"EIN # 27-0397638"` |
+| `es_ES.mo` | Recompile from updated .po (required — WordPress loads the binary .mo, not the text .po) |
 
-- **⬆️** (U+2B06 + U+FE0F) — BMP character, no surrogate pair needed → **renders correctly** ✓
-- **⏭️** (U+23ED + U+FE0F) — BMP character, no surrogate pair needed → **renders correctly** ✓
+**Why all three?** The `esc_html_e()` source string is the gettext lookup key. If footer.php says `'EIN # 27-0397638'` but the .po still has `msgid "EIN # 27-039-7638"`, the Spanish translation will fall back to the source string (which would show the correct new format, but the .po would have a stale orphan entry). Updating the .po msgid keeps the translation file in sync. Recompiling the .mo makes the .po change take effect at runtime.
 
-Per the inbox screenshot, both of these emoji rendered fine in the received email. **Only the "Currently Featured" header shows "??".**
-
-This proves the email charset pipeline is working correctly. UTF-8 encoding, Resend transport, and email client rendering all handle Unicode properly. The issue is isolated to one corrupted literal in the source.
-
----
-
-## 4. Verdict
-
-### **(A) Isolated broken decorative literal — NOT a charset risk.**
-
-The "??" is caused by a single corrupted emoji literal on line 448 of `featuredRotation.ts`. The charset/encoding pipeline is fine — other emoji in the same email render correctly. Animal names with accents or special characters (é, ñ, etc.) will render correctly in future editions because:
-- The source file is valid UTF-8
-- Node.js handles UTF-8 natively
-- Resend sends as UTF-8
-- The two working emoji prove the end-to-end chain is intact
-
-### Exact one-line fix (DO NOT APPLY — diagnosis only):
-
-**Line 448 of `/home/shelter/shelter-apps/server/src/featuredRotation.ts`:**
-
-Replace:
-```
-'�\uDCCC Currently Featured',
-```
-
-With:
-```
-'📌 Currently Featured',
-```
-
-That's it — replace the corrupted bytes with the actual 📌 emoji (U+1F4CC). One character, one line, cosmetic only.
+**Optional but not required:** Regenerating `four-legs-good.pot` to include the EIN string. Low priority — the .pot is a developer template, not used at runtime.
