@@ -26,10 +26,10 @@ curl -sSIL https://johnv80.sg-host.com/
 | ID | user_login | user_email | roles |
 |----|-----------|------------|-------|
 | 1 | flgnynjai@gmail.com | flgnynjai@gmail.com | administrator |
-| 2 | Thalia | thalia212345@gmail.com | editor |
-| 3 | Gayle | gswexler@gmail.com | editor |
+| 2 | Thalia | [REDACTED] | editor |
+| 3 | Gayle | [REDACTED] | editor |
 | 4 | dashboard-push | dashboard-push+wp@fourlegsgoodnynj.org | dashboard_service |
-| 5 | Lyra | lyramooncat@gmail.com | editor |
+| 5 | Lyra | [REDACTED] | editor |
 
 [VERIFIED — wp user list output]
 
