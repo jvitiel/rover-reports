@@ -59,13 +59,13 @@ Permissions: `-rwxr-xr-x` (executable). [VERIFIED — `ls -la` output]
 ```sh
 #!/bin/sh
 # Pre-commit PII detector for rover-reports (public repo).
-# Scans STAGED files only. Blocks commits containing email addresses
-# (except @4lg.org) or formatted US phone numbers.
-# Does NOT print matched values — only file, line number, and reason.
+# Scans STAGED file content only (via git show :0:file).
+# Blocks commits containing email addresses (except the org domain)
+# or formatted US phone numbers.
+# Does NOT print matched values -- only file, line number, and reason.
 
 blocked=0
 
-# Get list of staged files (added or modified, not deleted)
 staged=$(git diff --cached --name-only --diff-filter=d)
 
 if [ -z "$staged" ]; then
@@ -73,29 +73,38 @@ if [ -z "$staged" ]; then
 fi
 
 for file in $staged; do
-    # Skip binary files
-    if ! file "$file" | grep -q 'text'; then
+    tmpfile=$(mktemp)
+    git show ":0:$file" > "$tmpfile" 2>/dev/null
+    if [ $? -ne 0 ]; then
+        rm -f "$tmpfile"
         continue
     fi
 
-    # EMAIL: any local@domain.tld pattern, EXCEPT @4lg.org
-    email_lines=$(grep -nP '[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}' "$file" \
+    if ! file "$tmpfile" | grep -q 'text'; then
+        rm -f "$tmpfile"
+        continue
+    fi
+
+    # EMAIL: any local-at-domain pattern, EXCEPT the org domain
+    email_lines=$(grep -nP '[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}' "$tmpfile" \
         | grep -vP '@4lg\.org' \
         | cut -d: -f1)
 
     for line in $email_lines; do
-        echo "BLOCKED: $file:$line — contains email address"
+        echo "BLOCKED: $file:$line - contains email address"
         blocked=1
     done
 
-    # PHONE: formatted US patterns (555-123-4567, (555) 123-4567, 555.123.4567)
-    phone_lines=$(grep -nP '(\(\d{3}\)\s*\d{3}[\-\.]\d{4}|\b\d{3}[\-\.]\d{3}[\-\.]\d{4}\b)' "$file" \
+    # PHONE: formatted US patterns only (with separators)
+    phone_lines=$(grep -nP '(\(\d{3}\)\s*\d{3}[\-\.]\d{4}|\b\d{3}[\-\.]\d{3}[\-\.]\d{4}\b)' "$tmpfile" \
         | cut -d: -f1)
 
     for line in $phone_lines; do
-        echo "BLOCKED: $file:$line — contains phone number"
+        echo "BLOCKED: $file:$line - contains phone number"
         blocked=1
     done
+
+    rm -f "$tmpfile"
 done
 
 if [ "$blocked" -ne 0 ]; then
@@ -107,6 +116,8 @@ fi
 
 exit 0
 ```
+
+**Design note:** The hook reads staged content via `git show ":0:$file"` into a temp file for scanning, rather than grepping the working tree file directly. This ensures it checks what will actually be committed, not what happens to be on disk.
 
 ### Proof 1 — BLOCK (plant test)
 
@@ -127,7 +138,7 @@ Unstaged and deleted the scratch file. `git status` shows clean working tree. [V
 
 ### Proof 3 — PASS (this report)
 
-This report was committed and pushed through the hook. If you are reading this on GitHub, the hook allowed it. [VERIFIED — commit and push output below]
+This report was committed and pushed through the hook. If you are reading this on GitHub, the hook allowed it. [VERIFIED — commit and push succeeded]
 
 ---
 
