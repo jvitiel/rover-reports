@@ -1,12 +1,12 @@
-# Weekly Health Check — 2026-07-06 10:00:01 UTC
+# Weekly Health Check — 2026-09-07 10:00:01 UTC
 
 ## Verdict
 
 🟡 **4 informational note(s):**
 - ℹ️ DB: table active_sessions is empty
 - ℹ️ DB: table volunteer_declines is empty
-- ℹ️ Backups: ad-hoc files total 1.28GB (threshold: 1GB)
-- ℹ️ Grok video generation resumed: count 113 → 116 — consider tightening media backup cadence
+- ℹ️ Backups: ad-hoc files total 5.75GB (threshold: 1GB)
+- ℹ️ Grok video generation resumed: count 345 → 356 — consider tightening media backup cadence
 
 ---
 
@@ -14,10 +14,10 @@
 
 | Metric | Value |
 |--------|-------|
-| Uptime | up 16 weeks, 13 hours, 12 minutes (since 2026-03-15 20:47:16) |
-| Memory | 919MB / 3915MB used (2996MB available, 23%) |
-| Swap | 36MB / 511MB (7%) |
-| Disk | 33G / 79G (44%, 42G free) |
+| Uptime | up 25 weeks, 13 hours, 12 minutes (since 2026-03-15 20:47:16) |
+| Memory | 930MB / 3915MB used (2985MB available, 23%) |
+| Swap | 78MB / 511MB (15%) |
+| Disk | 34G / 79G (46%, 41G free) |
 | Load avg | 0.00 0.00 0.00 (2 CPUs) |
 
 ## Network
@@ -27,7 +27,7 @@
 | Unexpected public ports | none |
 | SSH password auth | no |
 | UFW firewall | Status: active |
-| TLS cert expires | 88 days (Oct  2 10:38:56 2026 GMT) |
+| TLS cert expires | 84 days (Dec  1 09:48:56 2026 GMT) |
 | HSTS header present | yes |
 | Pending security updates | 0 |
 
@@ -44,11 +44,11 @@
 
 ```
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-rover     219471  0.5  8.2 44129556 330880 ?     Ssl  Jul05  10:28 openclaw
-shelter   217686  0.1  6.3 22475640 255124 ?     Ssl  Jul04   3:53 /usr/bin/node dist/server.js
-caddy        725  0.0  0.8 1277208 33792 ?       Ssl  Mar15  54:38 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
-root      124752  0.0  0.7  99956 30884 ?        S<s  Jun29   1:32 /usr/lib/systemd/systemd-journald
-root           1  0.0  0.1  22532  7860 ?        Ss   Mar15  20:31 /usr/lib/systemd/systemd --system --deserialize=94
+rover    1558965  0.5  8.3 44136432 335540 ?     Ssl  Sep06   9:44 openclaw
+shelter  1157394  0.3  4.6 22490020 187056 ?     Ssl  Aug11 117:44 /usr/bin/node dist/server.js
+root     1512372  0.0  1.6 132280 66080 ?        S<s  Sep03   0:48 /usr/lib/systemd/systemd-journald
+root     1575609  0.0  1.0 479364 43252 ?        Ssl  09:56   0:00 /usr/libexec/fwupd/fwupd
+caddy        725  0.0  0.8 1278296 35724 ?       Ssl  Mar15 105:51 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
 ```
 
 ## HTTP Health Probes
@@ -60,79 +60,73 @@ root           1  0.0  0.1  22532  7860 ?        Ss   Mar15  20:31 /usr/lib/syst
 | Staff PWA | 200 |
 | Matcher | 200 |
 
-## Database (39 tables)
+## Database (33 tables)
 
 | Table | Rows |
 |-------|------|
 | active_sessions | 0 |
-| activity_archive | 10132 |
-| adoptable_status_snapshot | 493 |
+| activity_archive | 21096 |
+| adoptable_status_snapshot | 503 |
 | adopter_preferences | 52 |
-| adoption_applications | 9 |
-| animal_bio_drafts | 16 |
-| animal_bios | 311 |
-| animal_bios_history | 764 |
-| animal_media | 2114 |
-| animal_metadata | 920 |
-| behavior_notes | 147 |
-| daily_activities | 964 |
-| daily_feeding | 322 |
-| dashboard_events | 20 |
-| dashboard_stories | 9 |
-| featured_rotation_queue | 76 |
+| adoption_applications | 121 |
+| animal_bio_drafts | 23 |
+| animal_bios | 546 |
+| animal_bios_history | 1102 |
+| animal_media | 3210 |
+| animal_metadata | 1262 |
+| behavior_notes | 153 |
+| daily_activities | 1171 |
+| daily_feeding | 419 |
+| dashboard_events | 26 |
+| dashboard_stories | 11 |
+| featured_rotation_queue | 191 |
 | featured_rotation_state | 1 |
 | featured_slots | 6 |
-| feeding_archive | 15423 |
-| feeding_audit | 11671 |
+| feeding_archive | 28571 |
+| feeding_audit | 21475 |
 | followup_eval_audit | 3 |
 | intake_alert_recipients | 3 |
-| matcher_audit | 916 |
+| matcher_audit | 1809 |
 | overnight_intakes | 13 |
-| profile_quality_scores | 146 |
-| rg_attachments | 5 |
-| rg_email_routing | 6 |
-| rg_messages | 25 |
-| rg_requesters | 2 |
-| rg_requests | 4 |
-| rg_sessions | 1 |
-| searcher_daily_metrics | 71 |
+| profile_quality_scores | 152 |
+| searcher_daily_metrics | 134 |
 | sm_push_audit | 36 |
 | staff_notifications | 7 |
 | volunteer_commitments | 11 |
 | volunteer_declines | 0 |
-| volunteer_timeclock | 566 |
-| volunteers | 448 |
-| wellbeing_alerts | 58217 |
-| **DB file size** | **34.6MB** |
+| volunteer_timeclock | 842 |
+| volunteers | 515 |
+| wellbeing_alerts | 115865 |
+| **DB file size** | **63.7MB** |
 
 ## Scheduler Freshness
 
 | Scheduler | Latest | Stale | Weight |
 |-----------|--------|-------|--------|
-| Feeding archive (midnight ET) | 2026-07-04 | 2d | CRITICAL |
-| Activity auto-close (23:55 ET) | 2026-07-05 | 1d | CRITICAL |
-| SM photo sync (2am ET) | 2026-07-05 06:00:06 | 27h | CRITICAL |
-| Adoptable check (9am ET) | 2026-07-05T13:00:00.001Z | 21h | CRITICAL |
-| Generic bio (9:30am ET) | 2026-07-05T13:30:00.027Z | 0d | INFORMATIONAL |
-| Searcher snapshot (00:10 ET) | 2026-07-05 | 1d | INFORMATIONAL |
+| Feeding archive (midnight ET) | 2026-09-05 | 2d | CRITICAL |
+| Activity auto-close (23:55 ET) | 2026-09-06 | 1d | CRITICAL |
+| SM photo sync (2am ET) | 2026-09-07 06:00:02 | 3h | CRITICAL |
+| Adoptable check (9am ET) | 2026-09-06T13:00:00.058Z | 21h | CRITICAL |
+| Generic bio (9:30am ET) | 2026-09-06T12:30:10.920Z | 0d | INFORMATIONAL |
+| Searcher snapshot (00:10 ET) | 2026-09-06 | 1d | INFORMATIONAL |
 
 ## Backups
 
 | Tier | Count | Most Recent |
 |------|-------|-------------|
-| weekly-*.tar.gz | 16 | weekly-20260706.tar.gz |
-| data-*.tar.gz | 17 | data-20260706-031501.tar.gz |
-| shelter-*.db | 16 | shelter-2026-07-06.db |
-| media-*.tar.gz | 2 | media-20260705.tar.gz (1d ago) |
-| Ad-hoc (non-tiered) | 23 | 1320.3MB total |
+| weekly-*.tar.gz | 15 | weekly-20260907.tar.gz |
+| data-*.tar.gz | 15 | data-20260907-031501.tar.gz |
+| shelter-*.db | 15 | shelter-2026-09-07.db |
+| media-*.tar.gz | 5 | media-20260906.tar.gz (1d ago) |
+| Ad-hoc (non-tiered) | 13 | 5892.9MB total |
 
 ## Grok Resumption
 
 | Check | Value |
 |-------|-------|
-| grok_imagine video count | 116 |
-| Prior count (state file) | 113 |
-| Resumption detected | yes (+3) |
+| grok_imagine video count | 356 |
+| Prior count (state file) | 345 |
+| Resumption detected | yes (+11) |
 
 ## Security
 
@@ -158,25 +152,26 @@ root           1  0.0  0.1  22532  7860 ?        Ss   Mar15  20:31 /usr/lib/syst
 
 ### Root
 ```
-# Daily SQLite backup at 3am
+# ALL SCHEDULES BELOW ARE UTC. This cron (Vixie 3.0pl1-184ubuntu2) does NOT
+# honor CRON_TZ. Verified 2026-07-09 against 7 days of backup mtimes.
+# Daily SQLite backup at 03:00 UTC (11:00pm ET)
 0 3 * * * /home/shelter/scripts/backup-sqlite.sh
 # Weekly error log summary — Monday 9am UTC
 0 9 * * 1 /home/shelter/scripts/weekly-error-summary.sh
-# Weekly staging sync — Sunday 2:30am ET
-CRON_TZ=America/New_York
+# Weekly staging sync - Sunday 02:30 UTC (Sat 10:30pm ET)
 30 2 * * 0 /home/shelter/scripts/staging-sync.sh
-# Daily data backup at 3:15am ET
+# Daily data backup at 03:15 UTC (11:15pm ET)
 15 3 * * * /home/shelter/scripts/backup-data.sh
-# Daily combined snapshot at 3:30am ET
+# Daily combined snapshot at 03:30 UTC (11:30pm ET)
 30 3 * * * /home/shelter/scripts/backup-weekly.sh
-# Weekly media backup — Sunday 3:45am ET
+# Weekly media backup - Sunday 03:45 UTC (Sat 11:45pm ET)
 45 3 * * 0 /home/shelter/scripts/backup-media.sh
-# Prune Rover reports older than 7 days, daily 4am ET
+# Prune Rover reports older than 7 days - daily 08:00 UTC (4am EDT / 3am EST)
 0 8 * * * /home/shelter/scripts/rover-reports-prune.sh
 # Auto-close volunteer timeclock shifts >8 hours old, hourly at :05
 5 * * * * curl -sS -X POST http://localhost:3000/api/volunteers/timeclock/auto-close >> /var/log/timeclock-auto-close.log 2>&1
+# Weekly health check - Monday 10:00 UTC (6am ET)
 0 10 * * 1 /home/shelter/scripts/health-check.sh
-CRON_TZ=UTC
 # Archive old OC sessions before weekly restart — Sunday 2:40am UTC
 40 2 * * 0 find /home/rover/.openclaw-rover/agents/main/sessions/ -maxdepth 1 -name "*.jsonl.reset.*" -mtime +7 -exec mv {} /home/rover/.openclaw-rover/agents/main/sessions/archive/ \;
 # Weekly OC restart to clear accumulated session memory — Sunday 2:45am UTC
