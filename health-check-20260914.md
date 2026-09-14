@@ -1,11 +1,12 @@
-# Weekly Health Check — 2026-07-13 10:00:01 UTC
+# Weekly Health Check — 2026-09-14 10:00:01 UTC
 
 ## Verdict
 
-🟡 **3 informational note(s):**
+🟡 **4 informational note(s):**
 - ℹ️ DB: table active_sessions is empty
 - ℹ️ DB: table volunteer_declines is empty
-- ℹ️ Backups: ad-hoc files total 1.68GB (threshold: 1GB)
+- ℹ️ Backups: ad-hoc files total 5.92GB (threshold: 1GB)
+- ℹ️ Grok video generation resumed: count 356 → 357 — consider tightening media backup cadence
 
 ---
 
@@ -13,11 +14,11 @@
 
 | Metric | Value |
 |--------|-------|
-| Uptime | up 17 weeks, 13 hours, 12 minutes (since 2026-03-15 20:47:16) |
-| Memory | 943MB / 3915MB used (2972MB available, 24%) |
-| Swap | 36MB / 511MB (7%) |
-| Disk | 29G / 79G (40%, 46G free) |
-| Load avg | 0.04 0.01 0.00 (2 CPUs) |
+| Uptime | up 26 weeks, 13 hours, 12 minutes (since 2026-03-15 20:47:16) |
+| Memory | 933MB / 3915MB used (2981MB available, 23%) |
+| Swap | 19MB / 511MB (3%) |
+| Disk | 34G / 79G (46%, 41G free) |
+| Load avg | 0.00 0.00 0.00 (2 CPUs) |
 
 ## Network
 
@@ -26,7 +27,7 @@
 | Unexpected public ports | none |
 | SSH password auth | no |
 | UFW firewall | Status: active |
-| TLS cert expires | 81 days (Oct  2 10:38:56 2026 GMT) |
+| TLS cert expires | 77 days (Dec  1 09:48:56 2026 GMT) |
 | HSTS header present | yes |
 | Pending security updates | 0 |
 
@@ -43,11 +44,11 @@
 
 ```
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-rover     329768  0.5  9.2 44167656 369232 ?     Ssl  Jul12  11:02 openclaw
-shelter   333371  0.2  6.4 22470172 258684 ?     Ssl  Jul12   4:03 /usr/bin/node dist/server.js
-caddy        725  0.0  0.8 1277720 34712 ?       Ssl  Mar15  60:05 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
-root      124752  0.0  0.4  83572 17952 ?        S<s  Jun29   3:13 /usr/lib/systemd/systemd-journald
-root           1  0.0  0.1  22532  7852 ?        Ss   Mar15  20:56 /usr/lib/systemd/systemd --system --deserialize=94
+rover    1720512  0.5  8.4 44138056 339716 ?     Ssl  Sep13   9:28 openclaw
+shelter  1688329  0.2  6.0 22443020 242340 ?     Ssl  Sep11  12:54 /usr/bin/node dist/server.js
+root     1688320  0.0  3.4 230980 138184 ?       S<s  Sep11   0:40 /usr/lib/systemd/systemd-journald
+caddy        725  0.0  0.8 1278552 33840 ?       Ssl  Mar15 111:20 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+root     1688338  0.0  0.3 468824 13428 ?        Ssl  Sep11   0:04 /usr/libexec/udisks2/udisksd
 ```
 
 ## HTTP Health Probes
@@ -64,68 +65,68 @@ root           1  0.0  0.1  22532  7852 ?        Ss   Mar15  20:56 /usr/lib/syst
 | Table | Rows |
 |-------|------|
 | active_sessions | 0 |
-| activity_archive | 11096 |
-| adoptable_status_snapshot | 509 |
+| activity_archive | 22267 |
+| adoptable_status_snapshot | 490 |
 | adopter_preferences | 52 |
-| adoption_applications | 21 |
-| animal_bio_drafts | 16 |
-| animal_bios | 359 |
-| animal_bios_history | 826 |
-| animal_media | 2226 |
-| animal_metadata | 977 |
-| behavior_notes | 147 |
-| daily_activities | 1018 |
-| daily_feeding | 397 |
-| dashboard_events | 20 |
-| dashboard_stories | 11 |
-| featured_rotation_queue | 76 |
+| adoption_applications | 148 |
+| animal_bio_drafts | 23 |
+| animal_bios | 572 |
+| animal_bios_history | 1129 |
+| animal_media | 3280 |
+| animal_metadata | 1291 |
+| behavior_notes | 153 |
+| daily_activities | 1132 |
+| daily_feeding | 417 |
+| dashboard_events | 26 |
+| dashboard_stories | 12 |
+| featured_rotation_queue | 198 |
 | featured_rotation_state | 1 |
 | featured_slots | 6 |
-| feeding_archive | 16642 |
-| feeding_audit | 12633 |
+| feeding_archive | 30003 |
+| feeding_audit | 22419 |
 | followup_eval_audit | 3 |
 | intake_alert_recipients | 3 |
-| matcher_audit | 1015 |
+| matcher_audit | 1939 |
 | overnight_intakes | 13 |
-| profile_quality_scores | 146 |
-| searcher_daily_metrics | 78 |
+| profile_quality_scores | 152 |
+| searcher_daily_metrics | 141 |
 | sm_push_audit | 36 |
 | staff_notifications | 7 |
 | volunteer_commitments | 11 |
 | volunteer_declines | 0 |
-| volunteer_timeclock | 598 |
-| volunteers | 456 |
-| wellbeing_alerts | 63804 |
-| **DB file size** | **37.7MB** |
+| volunteer_timeclock | 871 |
+| volunteers | 522 |
+| wellbeing_alerts | 122409 |
+| **DB file size** | **67.1MB** |
 
 ## Scheduler Freshness
 
 | Scheduler | Latest | Stale | Weight |
 |-----------|--------|-------|--------|
-| Feeding archive (midnight ET) | 2026-07-11 | 2d | CRITICAL |
-| Activity auto-close (23:55 ET) | 2026-07-12 | 1d | CRITICAL |
-| SM photo sync (2am ET) | 2026-07-13 06:00:01 | 4h | CRITICAL |
-| Adoptable check (9am ET) | 2026-07-12T13:00:00.001Z | 21h | CRITICAL |
-| Generic bio (9:30am ET) | 2026-07-12T13:30:00.027Z | 0d | INFORMATIONAL |
-| Searcher snapshot (00:10 ET) | 2026-07-12 | 1d | INFORMATIONAL |
+| Feeding archive (midnight ET) | 2026-09-12 | 2d | CRITICAL |
+| Activity auto-close (23:55 ET) | 2026-09-13 | 1d | CRITICAL |
+| SM photo sync (2am ET) | 2026-09-14 06:00:01 | 4h | CRITICAL |
+| Adoptable check (9am ET) | 2026-09-13T13:00:00.010Z | 21h | CRITICAL |
+| Generic bio (9:30am ET) | 2026-09-13T12:30:00.036Z | 0d | INFORMATIONAL |
+| Searcher snapshot (00:10 ET) | 2026-09-13 | 1d | INFORMATIONAL |
 
 ## Backups
 
 | Tier | Count | Most Recent |
 |------|-------|-------------|
-| weekly-*.tar.gz | 16 | weekly-20260713.tar.gz |
-| data-*.tar.gz | 17 | data-20260713-031501.tar.gz |
-| shelter-*.db | 15 | shelter-2026-07-13.db |
-| media-*.tar.gz | 3 | media-20260712.tar.gz (1d ago) |
-| Ad-hoc (non-tiered) | 20 | 1726.2MB total |
+| weekly-*.tar.gz | 16 | weekly-20260914.tar.gz |
+| data-*.tar.gz | 15 | data-20260914-031501.tar.gz |
+| shelter-*.db | 16 | shelter-2026-09-14.db |
+| media-*.tar.gz | 5 | media-20260913.tar.gz (1d ago) |
+| Ad-hoc (non-tiered) | 13 | 6062.5MB total |
 
 ## Grok Resumption
 
 | Check | Value |
 |-------|-------|
-| grok_imagine video count | 116 |
-| Prior count (state file) | 116 |
-| Resumption detected | no |
+| grok_imagine video count | 357 |
+| Prior count (state file) | 356 |
+| Resumption detected | yes (+1) |
 
 ## Security
 
