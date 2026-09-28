@@ -1,12 +1,15 @@
-# Weekly Health Check — 2026-09-21 10:00:01 UTC
+# Weekly Health Check — 2026-09-28 10:00:01 UTC
 
 ## Verdict
 
-🟡 **4 informational note(s):**
+🔴 **1 critical flag(s):**
+- ⚠️ Stray DB snapshot(s) in data/: shelter.db.bak-2026-09-24-datenorm shelter.db.bak-2026-09-24-availbackfill — move to /home/shelter/backups/pre-migration/ (AGENTS.md rule 14)
+
+**4 informational note(s):**
 - ℹ️ DB: table active_sessions is empty
 - ℹ️ DB: table volunteer_declines is empty
-- ℹ️ Backups: ad-hoc files total 6.14GB (threshold: 1GB)
-- ℹ️ Grok video generation resumed: count 357 → 384 — consider tightening media backup cadence
+- ℹ️ Backups: ad-hoc files total 6.31GB (threshold: 1GB)
+- ℹ️ Grok video generation resumed: count 384 → 401 — consider tightening media backup cadence
 
 ---
 
@@ -14,11 +17,11 @@
 
 | Metric | Value |
 |--------|-------|
-| Uptime | up 27 weeks, 13 hours, 12 minutes (since 2026-03-15 20:47:16) |
-| Memory | 931MB / 3915MB used (2984MB available, 23%) |
+| Uptime | up 28 weeks, 13 hours, 12 minutes (since 2026-03-15 20:47:16) |
+| Memory | 978MB / 3915MB used (2937MB available, 24%) |
 | Swap | 32MB / 511MB (6%) |
-| Disk | 35G / 79G (47%, 40G free) |
-| Load avg | 0.48 0.10 0.03 (2 CPUs) |
+| Disk | 35G / 79G (48%, 40G free) |
+| Load avg | 0.04 0.01 0.00 (2 CPUs) |
 
 ## Network
 
@@ -27,7 +30,7 @@
 | Unexpected public ports | none |
 | SSH password auth | no |
 | UFW firewall | Status: active |
-| TLS cert expires | 70 days (Dec  1 09:48:56 2026 GMT) |
+| TLS cert expires | 63 days (Dec  1 09:48:56 2026 GMT) |
 | HSTS header present | yes |
 | Pending security updates | 0 |
 
@@ -44,11 +47,11 @@
 
 ```
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-rover    1851043  0.4  8.4 44133656 338960 ?     Ssl  Sep20   9:12 openclaw
-shelter  1825621  0.2  6.4 22474988 260144 ?     Ssl  Sep18  12:06 /usr/bin/node dist/server.js
-root     1688320  0.0  3.1 213284 126456 ?       S<s  Sep11   2:09 /usr/lib/systemd/systemd-journald
-caddy        725  0.0  0.9 1278552 36736 ?       Ssl  Mar15 116:56 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
-root           1  0.0  0.2  22540 11160 ?        Ss   Mar15  25:11 /usr/lib/systemd/systemd --system --deserialize=89
+rover    2074954  0.5  8.7 44149156 351216 ?     Ssl  Sep27   9:25 openclaw
+shelter  2023818  0.2  6.5 22453764 261508 ?     Ssl  Sep24  15:42 /usr/bin/node dist/server.js
+root     1688320  0.0  3.3 235416 134472 ?       S<s  Sep11   3:39 /usr/lib/systemd/systemd-journald
+root     2091609  0.1  1.0 479516 43252 ?        Ssl  09:58   0:00 /usr/libexec/fwupd/fwupd
+caddy        725  0.0  0.9 1278808 37564 ?       Ssl  Mar15 123:21 /usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
 ```
 
 ## HTTP Health Probes
@@ -65,68 +68,68 @@ root           1  0.0  0.2  22540 11160 ?        Ss   Mar15  25:11 /usr/lib/syst
 | Table | Rows |
 |-------|------|
 | active_sessions | 0 |
-| activity_archive | 23399 |
-| adoptable_status_snapshot | 471 |
+| activity_archive | 24530 |
+| adoptable_status_snapshot | 486 |
 | adopter_preferences | 52 |
-| adoption_applications | 165 |
+| adoption_applications | 211 |
 | animal_bio_drafts | 24 |
-| animal_bios | 593 |
-| animal_bios_history | 1150 |
-| animal_media | 3366 |
-| animal_metadata | 1329 |
+| animal_bios | 601 |
+| animal_bios_history | 1159 |
+| animal_media | 3495 |
+| animal_metadata | 1400 |
 | behavior_notes | 153 |
-| daily_activities | 1131 |
-| daily_feeding | 395 |
+| daily_activities | 1066 |
+| daily_feeding | 439 |
 | dashboard_events | 27 |
 | dashboard_stories | 12 |
-| featured_rotation_queue | 203 |
+| featured_rotation_queue | 213 |
 | featured_rotation_state | 1 |
 | featured_slots | 6 |
-| feeding_archive | 31415 |
-| feeding_audit | 23230 |
+| feeding_archive | 32842 |
+| feeding_audit | 24052 |
 | followup_eval_audit | 3 |
 | intake_alert_recipients | 3 |
-| matcher_audit | 2057 |
+| matcher_audit | 2227 |
 | overnight_intakes | 13 |
 | profile_quality_scores | 152 |
-| searcher_daily_metrics | 148 |
+| searcher_daily_metrics | 155 |
 | sm_push_audit | 36 |
 | staff_notifications | 7 |
 | volunteer_commitments | 11 |
 | volunteer_declines | 0 |
-| volunteer_timeclock | 910 |
-| volunteers | 533 |
-| wellbeing_alerts | 128880 |
-| **DB file size** | **70.3MB** |
+| volunteer_timeclock | 944 |
+| volunteers | 545 |
+| wellbeing_alerts | 135672 |
+| **DB file size** | **74.0MB** |
 
 ## Scheduler Freshness
 
 | Scheduler | Latest | Stale | Weight |
 |-----------|--------|-------|--------|
-| Feeding archive (midnight ET) | 2026-09-19 | 2d | CRITICAL |
-| Activity auto-close (23:55 ET) | 2026-09-20 | 1d | CRITICAL |
-| SM photo sync (2am ET) | 2026-09-21 06:00:01 | 4h | CRITICAL |
-| Adoptable check (9am ET) | 2026-09-20T13:00:00.002Z | 21h | CRITICAL |
-| Generic bio (9:30am ET) | 2026-09-20T12:30:00.019Z | 0d | INFORMATIONAL |
-| Searcher snapshot (00:10 ET) | 2026-09-20 | 1d | INFORMATIONAL |
+| Feeding archive (midnight ET) | 2026-09-26 | 2d | CRITICAL |
+| Activity auto-close (23:55 ET) | 2026-09-27 | 1d | CRITICAL |
+| SM photo sync (2am ET) | 2026-09-28 06:00:03 | 3h | CRITICAL |
+| Adoptable check (9am ET) | 2026-09-27T13:00:00.006Z | 21h | CRITICAL |
+| Generic bio (9:30am ET) | 2026-09-27T12:30:00.044Z | 0d | INFORMATIONAL |
+| Searcher snapshot (00:10 ET) | 2026-09-27 | 1d | INFORMATIONAL |
 
 ## Backups
 
 | Tier | Count | Most Recent |
 |------|-------|-------------|
-| weekly-*.tar.gz | 15 | weekly-20260921.tar.gz |
-| data-*.tar.gz | 16 | data-20260921-031501.tar.gz |
-| shelter-*.db | 16 | shelter-2026-09-21.db |
-| media-*.tar.gz | 5 | media-20260920.tar.gz (1d ago) |
-| Ad-hoc (non-tiered) | 13 | 6287.4MB total |
+| weekly-*.tar.gz | 15 | weekly-20260928.tar.gz |
+| data-*.tar.gz | 15 | data-20260928-031501.tar.gz |
+| shelter-*.db | 16 | shelter-2026-09-28.db |
+| media-*.tar.gz | 5 | media-20260927.tar.gz (1d ago) |
+| Ad-hoc (non-tiered) | 13 | 6462.8MB total |
 
 ## Grok Resumption
 
 | Check | Value |
 |-------|-------|
-| grok_imagine video count | 384 |
-| Prior count (state file) | 357 |
-| Resumption detected | yes (+27) |
+| grok_imagine video count | 401 |
+| Prior count (state file) | 384 |
+| Resumption detected | yes (+17) |
 
 ## Security
 
