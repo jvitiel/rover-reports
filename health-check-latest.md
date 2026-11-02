@@ -1,12 +1,11 @@
-# Weekly Health Check — 2026-10-26 10:00:01 UTC
+# Weekly Health Check — 2026-11-02 10:00:01 UTC
 
 ## Verdict
 
-🟡 **4 informational note(s):**
+🟡 **3 informational note(s):**
 - ℹ️ DB: table active_sessions is empty
-- ℹ️ DB: table volunteer_declines is empty
-- ℹ️ Backups: ad-hoc files total 7.03GB (threshold: 1GB)
-- ℹ️ Grok video generation resumed: count 416 → 421 — consider tightening media backup cadence
+- ℹ️ Backups: ad-hoc files total 7.37GB (threshold: 1GB)
+- ℹ️ Grok video generation resumed: count 421 → 492 — consider tightening media backup cadence
 
 ---
 
@@ -14,10 +13,10 @@
 
 | Metric | Value |
 |--------|-------|
-| Uptime | up 1 week, 6 days, 12 hours, 13 minutes (since 2026-10-12 21:46:48) |
-| Memory | 1332MB / 3915MB used (2583MB available, 34%) |
-| Swap | 138MB / 511MB (27%) |
-| Disk | 40G / 79G (54%, 35G free) |
+| Uptime | up 2 weeks, 6 days, 12 hours, 13 minutes (since 2026-10-12 21:46:48) |
+| Memory | 1472MB / 3915MB used (2443MB available, 37%) |
+| Swap | 270MB / 511MB (52%) |
+| Disk | 41G / 79G (55%, 35G free) |
 | Load avg | 0.00 0.00 0.00 (2 CPUs) |
 
 ## Network
@@ -27,7 +26,7 @@
 | Unexpected public ports | none |
 | SSH password auth | no |
 | UFW firewall | Status: active |
-| TLS cert expires | 35 days (Dec  1 09:48:56 2026 GMT) |
+| TLS cert expires | 88 days (Jan 30 08:58:29 2027 GMT) |
 | HSTS header present | yes |
 | Pending security updates | 0 |
 
@@ -44,11 +43,11 @@
 
 ```
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-rover     266356  0.5  8.8 44169628 353008 ?     Ssl  Oct25  10:05 openclaw
-shelter   254584  0.5  6.8 5630604 275644 ?      Sl   Oct24  14:22 /home/shelter/.claude/remote/ccd-cli/2.1.308-3f6ee6c72f6a --output-format stream-json --verbose --input-format stream-json --effort=medium --model=claude-opus-5-5 --permission-prompt-tool=stdio --allowedTools=mcp__computer-use,mcp__ccd_session__spawn_task,mcp__ccd_session__dismiss_task,mcp__ccd_session__mark_chapter,mcp__ccd_session_mgmt__list_sessions,mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__get_usage,mcp__ccd_host__get_storage_usage,mcp__ccd_session_mgmt__set_session_title,mcp__ccd_session_mgmt__send_message,mcp__ccd_session_mgmt__detach_session,mcp__ccd_sidebar__list_groups,mcp__ccd_sidebar__create_group,mcp__ccd_sidebar__set_view,mcp__ccd_sidebar__list_sections,mcp__ccd_sidebar__create_section,mcp__ccd_turn__wrap_up,mcp__ccd_turn__update_plan,mcp__ccd_session_mgmt__search_session_transcripts,mcp__ccd_session_mgmt__list_events,mcp__ccd_session_mgmt__export_transcript,mcp__ccd_session__read_widget_context,mcp__ccd_session__list_start_targets,mcp__ccd_view__show_pane,mcp__ccd_view__close_pane,mcp__ccd_view__get_layout,mcp__ccd_view__set_transcript_view,mcp__ccd_settings__get_settings,mcp__ccd_pr__get_status,mcp__ccd_window__open_session_in,mcp__ccd_window__close_split,mcp__ccd_window__set_sidebar_collapsed,mcp__ccd_window__get_window_layout --disallowedTools=SubscribePR,Edit(~/.claude/remote/**),Edit(~/.claude/remote/ccd-cli/**),Edit(~/.claude/remote/srv/**),Edit(~/.claude/remote/run/**),Edit(~/.claude/remote/plugins/**) --setting-sources=user,project,local --permission-mode=auto --include-partial-messages --plugin-dir=/home/shelter/.claude/remote/plugins/859401af/d51a917a39cb0aa1 --session-id=b9fe5262-6408-4404-a259-bdf0fadf010a --thinking-display omitted --replay-user-messages --settings {"fastMode":false,"deniedMcpServers":[{"serverName":"Claude Browser"},{"serverName":"Claude Code Android Emulator"},{"serverName":"Claude Code iOS Simulator"},{"serverName":"Claude Preview"},{"serverName":"Claude_Browser"},{"serverName":"Claude_Code_Android_Emulator"},{"serverName":"Claude_Code_iOS_Simulator"},{"serverName":"Claude_Preview"},{"serverName":"Claude_for_Chrome"},{"serverName":"Framebuffer"},{"serverName":"Window Halo"},{"serverName":"Window_Halo"},{"serverName":"ccd_connectors"},{"serverName":"ccd_directory"},{"serverName":"ccd_host"},{"serverName":"ccd_pr"},{"serverName":"ccd_session"},{"serverName":"ccd_session_mgmt"},{"serverName":"ccd_settings"},{"serverName":"ccd_sidebar"},{"serverName":"ccd_turn"},{"serverName":"ccd_view"},{"serverName":"ccd_window"},{"serverName":"claude-in-chrome"},{"serverName":"claude_browser"},{"serverName":"claude_code_android_emulator"},{"serverName":"claude_code_ios_simulator"},{"serverName":"claude_for_chrome"},{"serverName":"claude_in_chrome"},{"serverName":"claude_preview"},{"serverName":"computer-use"},{"serverName":"computer_use"},{"serverName":"cowork"},{"serverName":"cowork-onboarding"},{"serverName":"cowork_onboarding"},{"serverName":"dev-debug"},{"serverName":"dev_debug"},{"serverName":"dispatch"},{"serverName":"framebuffer"},{"serverName":"mcp-registry"},{"serverName":"mcp_registry"},{"serverName":"plugins"},{"serverName":"remote-devices"},{"serverName":"remote_devices"},{"serverName":"scheduled-tasks"},{"serverName":"scheduled_tasks"},{"serverName":"session_info"},{"serverName":"skills"},{"serverName":"window_halo"}],"sandbox":{"filesystem":{"denyWrite":["~/.claude/remote","~/.claude/remote/ccd-cli","~/.claude/remote/srv","~/.claude/remote/run","~/.claude/remote/plugins"]}}}
-shelter   227677  0.3  6.1 22508072 246064 ?     Ssl  Oct22  17:01 /usr/bin/node dist/server.js
-shelter   181619  0.4  5.1 5627156 205428 ?      Sl   Oct21  31:01 /home/shelter/.claude/remote/ccd-cli/2.1.304-332dfee32f6f --output-format stream-json --verbose --input-format stream-json --effort=medium --model=claude-opus-5-5 --permission-prompt-tool=stdio --resume=fa550ded-2267-45e3-99c1-f1cefd217444 --allowedTools=mcp__computer-use,mcp__ccd_session__spawn_task,mcp__ccd_session__dismiss_task,mcp__ccd_session__mark_chapter,mcp__ccd_session_mgmt__list_sessions,mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__get_usage,mcp__ccd_host__get_storage_usage,mcp__ccd_session_mgmt__set_session_title,mcp__ccd_session_mgmt__send_message,mcp__ccd_session_mgmt__detach_session,mcp__ccd_sidebar__list_groups,mcp__ccd_sidebar__create_group,mcp__ccd_sidebar__set_view,mcp__ccd_sidebar__list_sections,mcp__ccd_sidebar__create_section,mcp__ccd_session_mgmt__search_session_transcripts,mcp__ccd_session_mgmt__list_events,mcp__ccd_session_mgmt__export_transcript,mcp__ccd_session__read_widget_context,mcp__ccd_session__list_start_targets,mcp__ccd_view__show_pane,mcp__ccd_view__close_pane,mcp__ccd_view__get_layout,mcp__ccd_view__set_transcript_view,mcp__ccd_settings__get_settings,mcp__ccd_pr__get_status,mcp__ccd_window__open_session_in,mcp__ccd_window__close_split,mcp__ccd_window__set_sidebar_collapsed,mcp__ccd_window__get_window_layout --disallowedTools=SubscribePR,Edit(~/.claude/remote/**),Edit(~/.claude/remote/ccd-cli/**),Edit(~/.claude/remote/srv/**),Edit(~/.claude/remote/run/**),Edit(~/.claude/remote/plugins/**) --setting-sources=user,project,local --permission-mode=plan --include-partial-messages --plugin-dir=/home/shelter/.claude/remote/plugins/859401af/78e0587ea17e9d5e --thinking-display omitted --replay-user-messages --settings {"deniedMcpServers":[{"serverName":"Claude Browser"},{"serverName":"Claude Code Android Emulator"},{"serverName":"Claude Code iOS Simulator"},{"serverName":"Claude Preview"},{"serverName":"Claude_Browser"},{"serverName":"Claude_Code_Android_Emulator"},{"serverName":"Claude_Code_iOS_Simulator"},{"serverName":"Claude_Preview"},{"serverName":"Claude_for_Chrome"},{"serverName":"Framebuffer"},{"serverName":"Window Halo"},{"serverName":"Window_Halo"},{"serverName":"ccd_connectors"},{"serverName":"ccd_directory"},{"serverName":"ccd_host"},{"serverName":"ccd_pr"},{"serverName":"ccd_session"},{"serverName":"ccd_session_mgmt"},{"serverName":"ccd_settings"},{"serverName":"ccd_sidebar"},{"serverName":"ccd_turn"},{"serverName":"ccd_view"},{"serverName":"ccd_window"},{"serverName":"claude-in-chrome"},{"serverName":"claude_browser"},{"serverName":"claude_code_android_emulator"},{"serverName":"claude_code_ios_simulator"},{"serverName":"claude_for_chrome"},{"serverName":"claude_in_chrome"},{"serverName":"claude_preview"},{"serverName":"computer-use"},{"serverName":"computer_use"},{"serverName":"cowork"},{"serverName":"cowork-onboarding"},{"serverName":"cowork_onboarding"},{"serverName":"dev-debug"},{"serverName":"dev_debug"},{"serverName":"dispatch"},{"serverName":"framebuffer"},{"serverName":"mcp-registry"},{"serverName":"mcp_registry"},{"serverName":"plugins"},{"serverName":"remote-devices"},{"serverName":"remote_devices"},{"serverName":"scheduled-tasks"},{"serverName":"scheduled_tasks"},{"serverName":"session_info"},{"serverName":"skills"},{"serverName":"window_halo"}],"sandbox":{"filesystem":{"denyWrite":["~/.claude/remote","~/.claude/remote/ccd-cli","~/.claude/remote/srv","~/.claude/remote/run","~/.claude/remote/plugins"]}}}
-shelter     2417  0.0  2.4 22430696 97936 ?      Sl   Oct12  12:32 node /home/shelter/shelter-pilot/server/dist/server.js
+rover     462855  0.5  8.4 44144448 338188 ?     Ssl  Nov01   9:30 openclaw
+shelter   227677  0.3  4.5 22486764 183764 ?     Ssl  Oct22  49:34 /usr/bin/node dist/server.js
+shelter   254584  0.4  3.8 5630604 155296 ?      Sl   Oct24  61:29 /home/shelter/.claude/remote/ccd-cli/2.1.308-3f6ee6c72f6a --output-format stream-json --verbose --input-format stream-json --effort=medium --model=claude-opus-5-5 --permission-prompt-tool=stdio --allowedTools=mcp__computer-use,mcp__ccd_session__spawn_task,mcp__ccd_session__dismiss_task,mcp__ccd_session__mark_chapter,mcp__ccd_session_mgmt__list_sessions,mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__get_usage,mcp__ccd_host__get_storage_usage,mcp__ccd_session_mgmt__set_session_title,mcp__ccd_session_mgmt__send_message,mcp__ccd_session_mgmt__detach_session,mcp__ccd_sidebar__list_groups,mcp__ccd_sidebar__create_group,mcp__ccd_sidebar__set_view,mcp__ccd_sidebar__list_sections,mcp__ccd_sidebar__create_section,mcp__ccd_turn__wrap_up,mcp__ccd_turn__update_plan,mcp__ccd_session_mgmt__search_session_transcripts,mcp__ccd_session_mgmt__list_events,mcp__ccd_session_mgmt__export_transcript,mcp__ccd_session__read_widget_context,mcp__ccd_session__list_start_targets,mcp__ccd_view__show_pane,mcp__ccd_view__close_pane,mcp__ccd_view__get_layout,mcp__ccd_view__set_transcript_view,mcp__ccd_settings__get_settings,mcp__ccd_pr__get_status,mcp__ccd_window__open_session_in,mcp__ccd_window__close_split,mcp__ccd_window__set_sidebar_collapsed,mcp__ccd_window__get_window_layout --disallowedTools=SubscribePR,Edit(~/.claude/remote/**),Edit(~/.claude/remote/ccd-cli/**),Edit(~/.claude/remote/srv/**),Edit(~/.claude/remote/run/**),Edit(~/.claude/remote/plugins/**) --setting-sources=user,project,local --permission-mode=auto --include-partial-messages --plugin-dir=/home/shelter/.claude/remote/plugins/859401af/d51a917a39cb0aa1 --session-id=b9fe5262-6408-4404-a259-bdf0fadf010a --thinking-display omitted --replay-user-messages --settings {"fastMode":false,"deniedMcpServers":[{"serverName":"Claude Browser"},{"serverName":"Claude Code Android Emulator"},{"serverName":"Claude Code iOS Simulator"},{"serverName":"Claude Preview"},{"serverName":"Claude_Browser"},{"serverName":"Claude_Code_Android_Emulator"},{"serverName":"Claude_Code_iOS_Simulator"},{"serverName":"Claude_Preview"},{"serverName":"Claude_for_Chrome"},{"serverName":"Framebuffer"},{"serverName":"Window Halo"},{"serverName":"Window_Halo"},{"serverName":"ccd_connectors"},{"serverName":"ccd_directory"},{"serverName":"ccd_host"},{"serverName":"ccd_pr"},{"serverName":"ccd_session"},{"serverName":"ccd_session_mgmt"},{"serverName":"ccd_settings"},{"serverName":"ccd_sidebar"},{"serverName":"ccd_turn"},{"serverName":"ccd_view"},{"serverName":"ccd_window"},{"serverName":"claude-in-chrome"},{"serverName":"claude_browser"},{"serverName":"claude_code_android_emulator"},{"serverName":"claude_code_ios_simulator"},{"serverName":"claude_for_chrome"},{"serverName":"claude_in_chrome"},{"serverName":"claude_preview"},{"serverName":"computer-use"},{"serverName":"computer_use"},{"serverName":"cowork"},{"serverName":"cowork-onboarding"},{"serverName":"cowork_onboarding"},{"serverName":"dev-debug"},{"serverName":"dev_debug"},{"serverName":"dispatch"},{"serverName":"framebuffer"},{"serverName":"mcp-registry"},{"serverName":"mcp_registry"},{"serverName":"plugins"},{"serverName":"remote-devices"},{"serverName":"remote_devices"},{"serverName":"scheduled-tasks"},{"serverName":"scheduled_tasks"},{"serverName":"session_info"},{"serverName":"skills"},{"serverName":"window_halo"}],"sandbox":{"filesystem":{"denyWrite":["~/.claude/remote","~/.claude/remote/ccd-cli","~/.claude/remote/srv","~/.claude/remote/run","~/.claude/remote/plugins"]}}}
+shelter   321118  0.4  3.7 5630540 152048 ?      Sl   Oct27  38:37 /home/shelter/.claude/remote/ccd-cli/2.1.308-3f6ee6c72f6a --output-format stream-json --verbose --input-format stream-json --effort=medium --model=claude-opus-5-5 --permission-prompt-tool=stdio --allowedTools=mcp__computer-use,mcp__ccd_session__spawn_task,mcp__ccd_session__dismiss_task,mcp__ccd_session__mark_chapter,mcp__ccd_session_mgmt__list_sessions,mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__get_usage,mcp__ccd_host__get_storage_usage,mcp__ccd_session_mgmt__set_session_title,mcp__ccd_session_mgmt__send_message,mcp__ccd_session_mgmt__detach_session,mcp__ccd_sidebar__list_groups,mcp__ccd_sidebar__create_group,mcp__ccd_sidebar__set_view,mcp__ccd_sidebar__list_sections,mcp__ccd_sidebar__create_section,mcp__ccd_turn__wrap_up,mcp__ccd_turn__update_plan,mcp__ccd_session_mgmt__search_session_transcripts,mcp__ccd_session_mgmt__list_events,mcp__ccd_session_mgmt__export_transcript,mcp__ccd_session__read_widget_context,mcp__ccd_session__list_start_targets,mcp__ccd_view__show_pane,mcp__ccd_view__close_pane,mcp__ccd_view__get_layout,mcp__ccd_view__set_transcript_view,mcp__ccd_settings__get_settings,mcp__ccd_pr__get_status,mcp__ccd_window__open_session_in,mcp__ccd_window__close_split,mcp__ccd_window__set_sidebar_collapsed,mcp__ccd_window__get_window_layout --disallowedTools=SubscribePR,Edit(~/.claude/remote/**),Edit(~/.claude/remote/ccd-cli/**),Edit(~/.claude/remote/srv/**),Edit(~/.claude/remote/run/**),Edit(~/.claude/remote/plugins/**) --setting-sources=user,project,local --permission-mode=auto --include-partial-messages --plugin-dir=/home/shelter/.claude/remote/plugins/859401af/d51a917a39cb0aa1 --session-id=5b39a2e8-bac4-4a3a-b598-3c98a71651e2 --thinking-display omitted --replay-user-messages --settings {"fastMode":false,"deniedMcpServers":[{"serverName":"Claude Browser"},{"serverName":"Claude Code Android Emulator"},{"serverName":"Claude Code iOS Simulator"},{"serverName":"Claude Preview"},{"serverName":"Claude_Browser"},{"serverName":"Claude_Code_Android_Emulator"},{"serverName":"Claude_Code_iOS_Simulator"},{"serverName":"Claude_Preview"},{"serverName":"Claude_for_Chrome"},{"serverName":"Framebuffer"},{"serverName":"Window Halo"},{"serverName":"Window_Halo"},{"serverName":"ccd_connectors"},{"serverName":"ccd_directory"},{"serverName":"ccd_host"},{"serverName":"ccd_pr"},{"serverName":"ccd_session"},{"serverName":"ccd_session_mgmt"},{"serverName":"ccd_settings"},{"serverName":"ccd_sidebar"},{"serverName":"ccd_turn"},{"serverName":"ccd_view"},{"serverName":"ccd_window"},{"serverName":"claude-in-chrome"},{"serverName":"claude_browser"},{"serverName":"claude_code_android_emulator"},{"serverName":"claude_code_ios_simulator"},{"serverName":"claude_for_chrome"},{"serverName":"claude_in_chrome"},{"serverName":"claude_preview"},{"serverName":"computer-use"},{"serverName":"computer_use"},{"serverName":"cowork"},{"serverName":"cowork-onboarding"},{"serverName":"cowork_onboarding"},{"serverName":"dev-debug"},{"serverName":"dev_debug"},{"serverName":"dispatch"},{"serverName":"framebuffer"},{"serverName":"mcp-registry"},{"serverName":"mcp_registry"},{"serverName":"plugins"},{"serverName":"remote-devices"},{"serverName":"remote_devices"},{"serverName":"scheduled-tasks"},{"serverName":"scheduled_tasks"},{"serverName":"session_info"},{"serverName":"skills"},{"serverName":"window_halo"}],"sandbox":{"filesystem":{"denyWrite":["~/.claude/remote","~/.claude/remote/ccd-cli","~/.claude/remote/srv","~/.claude/remote/run","~/.claude/remote/plugins"]}}}
+shelter   376696  0.4  3.6 5631756 148064 ?      Sl   Oct29  25:36 /home/shelter/.claude/remote/ccd-cli/2.1.309-537ebbf12df5 --output-format stream-json --verbose --input-format stream-json --effort=medium --model=claude-opus-5-5 --permission-prompt-tool=stdio --resume=7179a1d4-9588-4ffe-98c3-4193e5add7ed --allowedTools=mcp__computer-use,mcp__ccd_session__spawn_task,mcp__ccd_session__dismiss_task,mcp__ccd_session__mark_chapter,mcp__ccd_session_mgmt__list_sessions,mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__get_usage,mcp__ccd_host__get_storage_usage,mcp__ccd_session_mgmt__set_session_title,mcp__ccd_session_mgmt__send_message,mcp__ccd_session_mgmt__detach_session,mcp__ccd_sidebar__list_groups,mcp__ccd_sidebar__create_group,mcp__ccd_sidebar__set_view,mcp__ccd_sidebar__list_sections,mcp__ccd_sidebar__create_section,mcp__ccd_turn__wrap_up,mcp__ccd_turn__update_plan,mcp__ccd_session_mgmt__search_session_transcripts,mcp__ccd_session_mgmt__list_events,mcp__ccd_session_mgmt__export_transcript,mcp__ccd_session__read_widget_context,mcp__ccd_session__list_start_targets,mcp__ccd_view__show_pane,mcp__ccd_view__close_pane,mcp__ccd_view__get_layout,mcp__ccd_view__set_transcript_view,mcp__ccd_settings__get_settings,mcp__ccd_pr__get_status,mcp__ccd_window__open_session_in,mcp__ccd_window__close_split,mcp__ccd_window__set_sidebar_collapsed,mcp__ccd_window__get_window_layout --disallowedTools=SubscribePR,Edit(~/.claude/remote/**),Edit(~/.claude/remote/ccd-cli/**),Edit(~/.claude/remote/srv/**),Edit(~/.claude/remote/run/**),Edit(~/.claude/remote/plugins/**) --setting-sources=user,project,local --permission-mode=auto --include-partial-messages --plugin-dir=/home/shelter/.claude/remote/plugins/859401af/7c5187bdeb4e62f5 --thinking-display omitted --replay-user-messages --settings {"deniedMcpServers":[{"serverName":"Claude Browser"},{"serverName":"Claude Code Android Emulator"},{"serverName":"Claude Code iOS Simulator"},{"serverName":"Claude Preview"},{"serverName":"Claude_Browser"},{"serverName":"Claude_Code_Android_Emulator"},{"serverName":"Claude_Code_iOS_Simulator"},{"serverName":"Claude_Preview"},{"serverName":"Claude_for_Chrome"},{"serverName":"Framebuffer"},{"serverName":"Window Halo"},{"serverName":"Window_Halo"},{"serverName":"ccd_connectors"},{"serverName":"ccd_directory"},{"serverName":"ccd_host"},{"serverName":"ccd_pr"},{"serverName":"ccd_session"},{"serverName":"ccd_session_mgmt"},{"serverName":"ccd_settings"},{"serverName":"ccd_sidebar"},{"serverName":"ccd_turn"},{"serverName":"ccd_view"},{"serverName":"ccd_window"},{"serverName":"claude-in-chrome"},{"serverName":"claude_browser"},{"serverName":"claude_code_android_emulator"},{"serverName":"claude_code_ios_simulator"},{"serverName":"claude_for_chrome"},{"serverName":"claude_in_chrome"},{"serverName":"claude_preview"},{"serverName":"computer-use"},{"serverName":"computer_use"},{"serverName":"cowork"},{"serverName":"cowork-onboarding"},{"serverName":"cowork_onboarding"},{"serverName":"dev-debug"},{"serverName":"dev_debug"},{"serverName":"dispatch"},{"serverName":"framebuffer"},{"serverName":"mcp-registry"},{"serverName":"mcp_registry"},{"serverName":"plugins"},{"serverName":"remote-devices"},{"serverName":"remote_devices"},{"serverName":"scheduled-tasks"},{"serverName":"scheduled_tasks"},{"serverName":"session_info"},{"serverName":"skills"},{"serverName":"window_halo"}],"sandbox":{"filesystem":{"denyWrite":["~/.claude/remote","~/.claude/remote/ccd-cli","~/.claude/remote/srv","~/.claude/remote/run","~/.claude/remote/plugins"]}}}
 ```
 
 ## HTTP Health Probes
@@ -65,68 +64,68 @@ shelter     2417  0.0  2.4 22430696 97936 ?      Sl   Oct12  12:32 node /home/sh
 | Table | Rows |
 |-------|------|
 | active_sessions | 0 |
-| activity_archive | 28841 |
-| adoptable_status_snapshot | 489 |
+| activity_archive | 30126 |
+| adoptable_status_snapshot | 439 |
 | adopter_preferences | 52 |
-| adoption_applications | 261 |
-| animal_bio_drafts | 28 |
-| animal_bios | 718 |
-| animal_bios_history | 1295 |
-| animal_media | 3833 |
-| animal_metadata | 1552 |
-| behavior_notes | 157 |
-| daily_activities | 1285 |
-| daily_feeding | 429 |
-| dashboard_events | 31 |
+| adoption_applications | 274 |
+| animal_bio_drafts | 44 |
+| animal_bios | 741 |
+| animal_bios_history | 1318 |
+| animal_media | 3981 |
+| animal_metadata | 1578 |
+| behavior_notes | 172 |
+| daily_activities | 1295 |
+| daily_feeding | 372 |
+| dashboard_events | 32 |
 | dashboard_stories | 12 |
-| featured_rotation_queue | 227 |
+| featured_rotation_queue | 233 |
 | featured_rotation_state | 1 |
 | featured_slots | 6 |
-| feeding_archive | 38806 |
-| feeding_audit | 27522 |
+| feeding_archive | 39989 |
+| feeding_audit | 28673 |
 | followup_eval_audit | 3 |
 | intake_alert_recipients | 3 |
-| matcher_audit | 2656 |
+| matcher_audit | 2770 |
 | overnight_intakes | 13 |
-| profile_quality_scores | 156 |
-| searcher_daily_metrics | 183 |
+| profile_quality_scores | 171 |
+| searcher_daily_metrics | 189 |
 | sm_push_audit | 36 |
 | staff_notifications | 7 |
 | volunteer_commitments | 11 |
-| volunteer_declines | 0 |
-| volunteer_timeclock | 1189 |
-| volunteers | 582 |
-| wellbeing_alerts | 163577 |
-| **DB file size** | **87.3MB** |
+| volunteer_declines | 1 |
+| volunteer_timeclock | 1276 |
+| volunteers | 593 |
+| wellbeing_alerts | 168365 |
+| **DB file size** | **90.4MB** |
 
 ## Scheduler Freshness
 
 | Scheduler | Latest | Stale | Weight |
 |-----------|--------|-------|--------|
-| Feeding archive (midnight ET) | 2026-10-24 | 2d | CRITICAL |
-| Activity auto-close (23:55 ET) | 2026-10-25 | 1d | CRITICAL |
-| SM photo sync (2am ET) | 2026-10-26 06:00:02 | 3h | CRITICAL |
-| Adoptable check (9am ET) | 2026-10-25T13:00:00.012Z | 21h | CRITICAL |
-| Generic bio (9:30am ET) | 2026-10-25T12:30:00.062Z | 0d | INFORMATIONAL |
-| Searcher snapshot (00:10 ET) | 2026-10-25 | 1d | INFORMATIONAL |
+| Feeding archive (midnight ET) | 2026-10-30 | 3d | CRITICAL |
+| Activity auto-close (23:55 ET) | 2026-11-01 | 1d | CRITICAL |
+| SM photo sync (2am ET) | 2026-11-02 06:00:01 | 4h | CRITICAL |
+| Adoptable check (9am ET) | 2026-11-01T13:00:00.036Z | 21h | CRITICAL |
+| Generic bio (9:30am ET) | 2026-11-01T12:30:00.154Z | 0d | INFORMATIONAL |
+| Searcher snapshot (00:10 ET) | 2026-10-31 | 2d | INFORMATIONAL |
 
 ## Backups
 
 | Tier | Count | Most Recent |
 |------|-------|-------------|
-| weekly-*.tar.gz | 15 | weekly-20261026.tar.gz |
-| data-*.tar.gz | 15 | data-20261026-031501.tar.gz |
-| shelter-*.db | 15 | shelter-2026-10-26.db |
-| media-*.tar.gz | 5 | media-20261025.tar.gz (1d ago) |
-| Ad-hoc (non-tiered) | 13 | 7206.0MB total |
+| weekly-*.tar.gz | 15 | weekly-20261102.tar.gz |
+| data-*.tar.gz | 15 | data-20261102-031501.tar.gz |
+| shelter-*.db | 15 | shelter-2026-11-02.db |
+| media-*.tar.gz | 5 | media-20261101.tar.gz (1d ago) |
+| Ad-hoc (non-tiered) | 13 | 7550.8MB total |
 
 ## Grok Resumption
 
 | Check | Value |
 |-------|-------|
-| grok_imagine video count | 421 |
-| Prior count (state file) | 416 |
-| Resumption detected | yes (+5) |
+| grok_imagine video count | 492 |
+| Prior count (state file) | 421 |
+| Resumption detected | yes (+71) |
 
 ## Security
 
